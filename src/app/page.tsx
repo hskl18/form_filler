@@ -77,7 +77,7 @@ export default function Home() {
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       saveAs(blob, `${formData.name}_filled_form.pdf`);
-    } catch (error) {
+    } catch (error:any) {
       console.error('Error filling PDF:', error);
     }
   };
@@ -149,7 +149,7 @@ async function searchProperty(address:any) {
     } else {
       return 'No results found or empty data set returned.';
     }
-  } catch (e) {
+  } catch (e:any) {
     // Handle any errors that occur during the request
     return `There was a problem fetching the data: ${e.message}`;
   }
