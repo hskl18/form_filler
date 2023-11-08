@@ -24,51 +24,58 @@ export default function Home() {
   };
 
   const fillPdfAndDownload = async (formData) => {
-    console.log('Starting PDF fill-in process');
+    // Assuming searchProperty and legalDescription are implemented somewhere
+    const legalDescription = await searchProperty(formData.street);
+    const today = new Date();
+    const today_str = `${today.getMonth() + 1}/${today.getDate()}`;
+    const current_year = today.getFullYear();
+  
+    const baseData = {
+      'Text24': formData.name + ", Trustee",
+      'Text2': formData.trustName,
+      'Text3': formData.street,
+      'Text4': `${formData.city}, ${formData.state}, ${formData.zip}`,
+      // 'Text41': 'formData.zip',
+      'Text5': `${formData.name}, TRUSTEE OF THE ${formData.trustName.toUpperCase()}`,
+      'Text6': formData.city,
+      'Text7': formData.county,
+      'Text8': formData.state,
+      'Text9': `${formData.street}, ${formData.city} ${formData.state} ${formData.zip}`,
+      'Text10': legalDescription, // assuming this comes from the searchProperty function
+      'MMMM D': today_str,
+      'YYYY': `${current_year}`,
+      'Text Field0': `${formData.name}, Trustee`,
+      'Text14': formData.county,
+      'Text15': `${today_str}/${current_year}`,
+      'Text16': formData.agent,
+      'Text17': formData.name
+    };
   
     try {
-      // Set the relative path to the PDF template within your project
       const pdfTemplateUrl = '../../files/Homestead.pdf';
-  
-      // Fetch the PDF template
       const arrayBuffer = await fetch(pdfTemplateUrl).then(res => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
         return res.arrayBuffer();
       });
-      console.log('PDF template fetched');
   
-      // Load the PDF document
       const pdfDoc = await PDFDocument.load(arrayBuffer);
-      console.log('PDF loaded');
-  
-      // This should be your actual fields and values you wish to update
-      const formValues = {
-        name: formData.name,
-        // ... other form fields and their corresponding values
-      };
-  
-      // Fill the form with values
       const form = pdfDoc.getForm();
-      for (const [key, value] of Object.entries(formValues)) {
+  
+      for (const [key, value] of Object.entries(baseData)) {
         const field = form.getTextField(key);
         if (field) {
           field.setText(value);
-          console.log(`Field ${key} set to ${value}`);
         } else {
-          console.log(`No field named ${key} found`);
+          // If the field is not found, you may want to handle it differently
+          console.warn(`No field named ${key} found`);
         }
       }
   
       form.flatten();
   
-      // Save the filled PDF
       const pdfBytes = await pdfDoc.save();
-      console.log('PDF saved');
-  
-      // Trigger the download
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       saveAs(blob, `${formData.name}_filled_form.pdf`);
-      console.log('Download should now trigger');
     } catch (error) {
       console.error('Error filling PDF:', error);
     }
@@ -122,20 +129,27 @@ export default function Home() {
 
   );
 }
-// Client-side version of `search_property` function
+
 async function searchProperty(address) {
-  const urlAddress = encodeURIComponent(address);
   try {
-    const response = await fetch(`https://your.api/endpoint?address=${urlAddress}`);
+    const urlAddress = encodeURIComponent(address);
+    const response = await fetch(`https://portal.assessor.lacounty.gov/api/search?search=${urlAddress}`);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+
     const data = await response.json();
-    // Process your data and return the legal description
-    // Replace the return below with your actual logic
-    return data.legalDescription;
-  } catch (error) {
-    console.error(`There was a problem fetching the property data: ${error}`);
-    return ''; // Return an empty string or some error indicator as appropriate
+    if (data && data.Parcels && data.Parcels.length > 0) {
+      const firstParcel = data.Parcels[0];
+      // Create the string with AIN and Legal Description
+      const resultString = `AIN: ${firstParcel.AIN}\nLegal Description: ${firstParcel.LegalDescription}`;
+      return resultString;
+    } else {
+      return 'No results found or empty data set returned.';
+    }
+  } catch (e) {
+    // Handle any errors that occur during the request
+    return `There was a problem fetching the data: ${e.message}`;
   }
 }
