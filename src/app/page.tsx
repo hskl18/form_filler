@@ -24,7 +24,7 @@ export default function Home() {
   };
   
 
-  const fillPdfAndDownload = async (formData) => {
+  const fillPdfAndDownload = async (formData: any) => {
     // Assuming searchProperty and legalDescription are implemented somewhere
     const legalDescription = await searchProperty(formData.street);
     const today = new Date();
@@ -131,7 +131,7 @@ export default function Home() {
   );
 }
 
-async function searchProperty(address) {
+async function searchProperty(address:any) {
   try {
     const urlAddress = encodeURIComponent(address);
     const response = await fetch(`https://portal.assessor.lacounty.gov/api/search?search=${urlAddress}`);
