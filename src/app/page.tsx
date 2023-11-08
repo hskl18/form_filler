@@ -18,10 +18,11 @@ export default function Home() {
   });
 
   // Handle form field changes
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prevState => ({ ...prevState, [id]: value }));
   };
+  
 
   const fillPdfAndDownload = async (formData) => {
     // Assuming searchProperty and legalDescription are implemented somewhere
