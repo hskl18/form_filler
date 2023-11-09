@@ -5,6 +5,44 @@ import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 
 export default function Home() {
+
+
+  // Define the type for the expected fetch data
+  type fetchDataType = {
+    street: string;
+    city: string;
+    zip: string;
+    legalDescription: string;
+  };
+
+  async function searchProperty(address:any): Promise<fetchDataType> {
+    try {
+      const urlAddress = encodeURIComponent(address);
+      const response = await fetch(`https://portal.assessor.lacounty.gov/api/search?search=${urlAddress}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      if (data && data.Parcels && data.Parcels.length > 0) {
+        const firstParcel = data.Parcels[0];
+        // Create the string with AIN and Legal Description
+        const result: fetchDataType = {
+          street: firstParcel.SitusStreet || '',
+          city: firstParcel.SitusCity || '',
+          zip: firstParcel.SitusZipCode || '',
+          legalDescription: `AIN: ${firstParcel.AIN}\nLegal Description: ${firstParcel.LegalDescription}` || ''
+        };
+        return result;
+      } else {
+        throw new Error('No results found or empty data set returned.');
+      }
+    } catch (e:any) {
+      // Handle any errors that occur during the request
+      throw new Error(`There was a problem fetching the data: ${e.message}`);
+    }
+  }
   
   const [data, setFormData] = useState({
     name: '',
@@ -24,22 +62,23 @@ export default function Home() {
 
   const fillPdfAndDownload = async (formData: any) => {
     // Assuming searchProperty and legalDescription are implemented somewhere
-    const legalDescription = await searchProperty(formData.street);
-    const today = new Date();
-    const today_str = `${today.getMonth() + 1}/${today.getDate()}`;
-    const current_year = today.getFullYear();
+    const info = await searchProperty(formData.street);
+    // const today = new Date();
+    // const today_str = `${today.getMonth() + 1}/${today.getDate()}`;
+    // const current_year = today.getFullYear();
   
     const baseData = {
       'Text24': `\n ${formData.name.toUpperCase()}`,
       'Text2': formData.name,
-      'Text3': formData.street,
-      'Text4': `${formData.city}, CA ${formData.zip}`,
+      'Text3': info.street,
+      'Text4': `${info.city}, CA ${info.zip}`,
+      // 'Text41': info.zip,
       'Text5': `${formData.name}`,
-      'Text6': formData.city,
+      'Text6': info.city,
       'Text7': formData.county,
       'Text8': "California",
-      'Text9': `${formData.street}, ${formData.city}, CA ${formData.zip}`,
-      'Text10': `\n${legalDescription}`, // assuming this comes from the searchProperty function
+      'Text9': `${info.street}, ${info.city},\nCA ${info.zip}`,
+      'Text10': `\n${info.legalDescription}`, // assuming this comes from the searchProperty function
       // 'MMMM D': today_str,
       // 'YYYY': `${current_year}`,
       // 'Text Field0': `${formData.name}, Trustee`,
@@ -78,17 +117,14 @@ export default function Home() {
       console.error('Error filling PDF:', error);
     }
   };
-  
-  
-
 
   // Define form fields for rendering
   const fieldsData = [
     { id: 'name', label: 'Name' },
     { id: 'street', label: 'Street' },
-    { id: 'city', label: 'City' },
+    // { id: 'city', label: 'City' },
     { id: 'county', label: 'County' },
-    { id: 'zip', label: 'ZIP Code' },
+    // { id: 'zip', label: 'ZIP Code' },
     { id: 'agent', label: 'Agent' },
     // Add other fields as needed
   ];
@@ -124,28 +160,4 @@ export default function Home() {
     </div>
 
   );
-}
-
-async function searchProperty(address:any) {
-  try {
-    const urlAddress = encodeURIComponent(address);
-    const response = await fetch(`https://portal.assessor.lacounty.gov/api/search?search=${urlAddress}`);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    if (data && data.Parcels && data.Parcels.length > 0) {
-      const firstParcel = data.Parcels[0];
-      // Create the string with AIN and Legal Description
-      const resultString = `AIN: ${firstParcel.AIN}\nLegal Description: ${firstParcel.LegalDescription}`;
-      return resultString;
-    } else {
-      return 'No results found or empty data set returned.';
-    }
-  } catch (e:any) {
-    // Handle any errors that occur during the request
-    return `There was a problem fetching the data: ${e.message}`;
-  }
 }
