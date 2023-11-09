@@ -7,12 +7,14 @@ import { saveAs } from 'file-saver';
 export default function Home() {
 
 
+
   // Define the type for the expected fetch data
   type fetchDataType = {
     street: string;
     city: string;
     zip: string;
     legalDescription: string;
+    ain: string;
   };
 
   async function searchProperty(address:any): Promise<fetchDataType> {
@@ -32,6 +34,7 @@ export default function Home() {
           street: firstParcel.SitusStreet || '',
           city: firstParcel.SitusCity || '',
           zip: firstParcel.SitusZipCode || '',
+          ain: firstParcel.AIN || '',
           legalDescription: `AIN: ${firstParcel.AIN}\nLegal Description: ${firstParcel.LegalDescription}` || ''
         };
         return result;
@@ -46,12 +49,14 @@ export default function Home() {
   
   const [data, setFormData] = useState({
     name: '',
+    spouse: '',
     street: '',
-    city: '',
-    zip: '',
     county: '',
     agent: '',
   });
+
+
+
 
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,30 +71,51 @@ export default function Home() {
     // const today = new Date();
     // const today_str = `${today.getMonth() + 1}/${today.getDate()}`;
     // const current_year = today.getFullYear();
-  
-    const baseData = {
-      'Text24': `\n ${formData.name.toUpperCase()}`,
-      'Text2': formData.name,
-      'Text3': info.street,
-      'Text4': `${info.city}, CA ${info.zip}`,
-      // 'Text41': info.zip,
-      'Text5': `${formData.name}`,
-      'Text6': info.city,
-      'Text7': formData.county,
-      'Text8': "California",
-      'Text9': `${info.street}, ${info.city},\nCA ${info.zip}`,
-      'Text10': `\n${info.legalDescription}`, // assuming this comes from the searchProperty function
-      // 'MMMM D': today_str,
-      // 'YYYY': `${current_year}`,
-      // 'Text Field0': `${formData.name}, Trustee`,
-      'Text14': formData.county,
-      // 'Text15': `${today_str}/${current_year}`,
-      'Text16': formData.agent,
-      'Text17': formData.name
-    };
+    let baseData = {};
+    if (formData.spouse=== ''){
+      baseData = {
+        'Text24': `\n ${formData.name.toUpperCase()}`,
+        'Text2': formData.name,
+        'Text3': info.street,
+        'Text4': `${info.city}, CA ${info.zip}`,
+        // 'Text41': info.zip,
+        'Text5': `${formData.name}`,
+        'Text6': info.city,
+        'Text7': formData.county,
+        'Text8': "California",
+        'Text9': `${info.street}, ${info.city},\nCA ${info.zip}`,
+        'Text10': `\n${info.legalDescription}`, // assuming this comes from the searchProperty function
+        // 'MMMM D': today_str,
+        // 'YYYY': `${current_year}`,
+        // 'Text Field0': `${formData.name}, Trustee`,
+        'Text14': formData.county,
+        // 'Text15': `${today_str}/${current_year}`,
+        'Text16': formData.agent,
+        'Text17': formData.name
+      };
+    }
+    else{
+      baseData = {
+        'Assessors Parcel No APN': info.ain,
+        'recording-name':formData.name,
+        'mail-name':formData.name,
+        'mail-address':info.street,
+        'mail-address-2':`${info.city}, CA ${info.zip}`,
+        'spouse-1':formData.name,
+        'spouse-2':formData.spouse,
+        'city':info.city,
+        'street address':info.street,
+        'print-name-1': formData.name,
+        'print-name-2': formData.spouse,
+        'legal-description':info.legalDescription,
+      }
+    }
+    
   
     try {
-      const pdfTemplateUrl = '../../files/Homestead.pdf';
+      let pdfTemplateUrl ='';
+      if (formData.spouse=== '') {pdfTemplateUrl = '../../files/Homestead.pdf';}
+      else {pdfTemplateUrl = '../../files/HomesteadSpouse.pdf';}
       const arrayBuffer = await fetch(pdfTemplateUrl).then(res => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
         return res.arrayBuffer();
@@ -121,6 +147,7 @@ export default function Home() {
   // Define form fields for rendering
   const fieldsData = [
     { id: 'name', label: 'Name' },
+    { id: 'spouse', label: 'Spouse' },
     { id: 'street', label: 'Street' },
     // { id: 'city', label: 'City' },
     { id: 'county', label: 'County' },
