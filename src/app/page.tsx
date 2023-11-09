@@ -116,6 +116,7 @@ export default function Home() {
       let pdfTemplateUrl ='';
       if (formData.spouse=== '') {pdfTemplateUrl = '../../files/Homestead.pdf';}
       else {pdfTemplateUrl = '../../files/HomesteadSpouse.pdf';}
+
       const arrayBuffer = await fetch(pdfTemplateUrl).then(res => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
         return res.arrayBuffer();
@@ -126,12 +127,13 @@ export default function Home() {
   
       for (const [key, value] of Object.entries(baseData)) {
         const field = form.getTextField(key);
-        if (field) {
+        
+        if (typeof value === 'string') {
           field.setText(value);
         } else {
-          // If the field is not found, you may want to handle it differently
-          console.warn(`No field named ${key} found`);
+          console.warn(`Value for field ${key} is not a string:`, value);
         }
+
       }
   
       form.flatten();
