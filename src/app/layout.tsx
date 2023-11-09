@@ -5,7 +5,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Fill the form',
+  title: 'Form Filler',
   description: 'Generate a filled form',
 }
 

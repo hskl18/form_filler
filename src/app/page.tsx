@@ -8,10 +8,8 @@ export default function Home() {
   
   const [data, setFormData] = useState({
     name: '',
-    trustName: '',
     street: '',
     city: '',
-    state: '',
     zip: '',
     county: '',
     agent: '',
@@ -32,22 +30,21 @@ export default function Home() {
     const current_year = today.getFullYear();
   
     const baseData = {
-      'Text24': formData.name + ", Trustee",
-      'Text2': formData.trustName,
+      'Text24': `\n ${formData.name.toUpperCase()}`,
+      'Text2': formData.name,
       'Text3': formData.street,
-      'Text4': `${formData.city}, ${formData.state}, ${formData.zip}`,
-      // 'Text41': 'formData.zip',
-      'Text5': `${formData.name}, TRUSTEE OF THE ${formData.trustName.toUpperCase()}`,
+      'Text4': `${formData.city}, CA ${formData.zip}`,
+      'Text5': `${formData.name}`,
       'Text6': formData.city,
       'Text7': formData.county,
-      'Text8': formData.state,
-      'Text9': `${formData.street}, ${formData.city} ${formData.state} ${formData.zip}`,
-      'Text10': legalDescription, // assuming this comes from the searchProperty function
-      'MMMM D': today_str,
-      'YYYY': `${current_year}`,
-      'Text Field0': `${formData.name}, Trustee`,
+      'Text8': "California",
+      'Text9': `${formData.street}, ${formData.city}, CA ${formData.zip}`,
+      'Text10': `\n${legalDescription}`, // assuming this comes from the searchProperty function
+      // 'MMMM D': today_str,
+      // 'YYYY': `${current_year}`,
+      // 'Text Field0': `${formData.name}, Trustee`,
       'Text14': formData.county,
-      'Text15': `${today_str}/${current_year}`,
+      // 'Text15': `${today_str}/${current_year}`,
       'Text16': formData.agent,
       'Text17': formData.name
     };
@@ -88,11 +85,9 @@ export default function Home() {
   // Define form fields for rendering
   const fieldsData = [
     { id: 'name', label: 'Name' },
-    { id: 'trustName', label: 'Trust Name' },
     { id: 'street', label: 'Street' },
     { id: 'city', label: 'City' },
     { id: 'county', label: 'County' },
-    { id: 'state', label: 'State' },
     { id: 'zip', label: 'ZIP Code' },
     { id: 'agent', label: 'Agent' },
     // Add other fields as needed
