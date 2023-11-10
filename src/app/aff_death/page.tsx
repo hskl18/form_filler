@@ -71,7 +71,7 @@ export default function Aff_death() {
     'bookNumber': '',
     'pageNumber': '',
     'trustName': '',
-  
+    'feild': '' 
   });
 
 
@@ -105,7 +105,7 @@ export default function Aff_death() {
       'Page No': formData.pageNumber,
       'Name of County': formData.county,
       'County-2': formData.county,
-      'Property Description': `${info.street},${info.city}, CA ${info.zip}\n${info.legalDescription}`,
+      'Property Description': `${info.street},${info.city}, CA ${info.zip}\n${info.legalDescription}\n${formData.feild}`,
       'Name of Declarant-2': formData.name,
     };
     
@@ -144,17 +144,18 @@ export default function Aff_death() {
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: 'street', label: 'Street (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)' },
+    { id: 'street', label: 'Address (street only) (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)' },
     { id: 'county', label: 'County' },
-    { id: 'name', label: 'Name' },
+    { id: 'name', label: 'Name (Surviving/Successor Trustee/Requstor)' },
     { id: 'decedentName', label: 'decedent name' },
-    { id: 'dateOfDeclarationOfTrust', label: 'date of declaration of trust'},
-    { id: 'signatoryName', label: 'signatory name' },
-    { id: 'dateOfDeed', label: 'date of deed' },
-    { id: 'documentNumber', label: 'document number' },
+    { id: 'dateOfDeclarationOfTrust', label: 'date of declaration of trust (Notary date of Trust)'},
+    { id: 'signatoryName', label: 'signatory name (Trustor(s)' },
+    { id: 'dateOfDeed', label: 'date of deed (dirst recoding date of trust)' },
+    { id: 'documentNumber', label: 'document number (Instument #)' },
     { id: 'bookNumber', label: 'book number' },
     { id: 'pageNumber', label: 'page number'},
-    { id: 'trustName', label: 'trust name'}
+    { id: 'trustName', label: 'trust name'},
+    { id: 'feild', label: 'Description (opional)' },
   ];
 
   return (
