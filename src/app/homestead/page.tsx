@@ -6,6 +6,32 @@ import { saveAs } from 'file-saver';
 
 export default function Homestead() {
 
+  const downloadPdf = async () => {
+    try {
+      let pdfTemplateUrl = '../../files/Homestead.pdf';
+  
+      const response = await fetch(pdfTemplateUrl);
+      if (!response.ok) throw new Error(`Error fetching PDF: ${response.statusText}`);
+      const blob = await response.blob();
+      saveAs(blob, `Homestead.pdf`);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
+
+  const downloadPdfs = async () => {
+    try {
+      let pdfTemplateUrl = '../../files/HomesteadSpouse.pdf';
+  
+      const response = await fetch(pdfTemplateUrl);
+      if (!response.ok) throw new Error(`Error fetching PDF: ${response.statusText}`);
+      const blob = await response.blob();
+      saveAs(blob, `HomesteadSpouse.pdf`);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
+
   // Define the type for the expected fetch data
   type fetchDataType = {
     street: string;
@@ -184,6 +210,36 @@ export default function Homestead() {
         >
           Fill and Download PDF
         </button>
+        
+
+        <br />
+        <br />
+
+        <button 
+          className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+          type="button"
+          onClick={downloadPdf}
+        >
+          Just download the fillable PDF
+        </button>
+        <br />
+        <button 
+          className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+          type="button"
+          onClick={downloadPdfs}
+        >
+          Just download the fillable PDF for Spouse
+        </button>
+        <br />
+        <button 
+          className="bg-blue-400 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+          type="button"
+          onClick={() => window.open('https://portal.assessor.lacounty.gov/', '_blank')}
+        >
+          Open LA County Assessor Portal
+        </button>
+
+
       </form>
     </div>
 
