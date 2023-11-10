@@ -149,7 +149,7 @@ export default function Homestead() {
   const fieldsData = [
     { id: 'name', label: 'Name' },
     { id: 'spouse', label: 'Spouse' },
-    { id: 'street', label: 'Street' },
+    { id: 'street', label: 'Street (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)' },
     // { id: 'city', label: 'City' },
     { id: 'county', label: 'County' },
     // { id: 'zip', label: 'ZIP Code' },

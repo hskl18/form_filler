@@ -6,6 +6,19 @@ import { saveAs } from 'file-saver';
 
 export default function Aff_death() {
 
+  const downloadPdf = async () => {
+    try {
+      let pdfTemplateUrl = '../../files/AffidavitOfDeath.pdf';
+  
+      const response = await fetch(pdfTemplateUrl);
+      if (!response.ok) throw new Error(`Error fetching PDF: ${response.statusText}`);
+      const blob = await response.blob();
+      saveAs(blob, `AffidavitOfDeath.pdf`);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
+
   // Define the type for the expected fetch data
   type fetchDataType = {
     street: string;
@@ -76,8 +89,8 @@ export default function Aff_death() {
       'Printed Name of Trust': formData.trustName,
       'Recording Requested by': formData.name,
       'Name': formData.name,
-      'Mailing Address': info.city,
-      'City State Zip': `${info.zip}`,
+      'Mailing Address': `${info.street}`,
+      'City State Zip': `${info.city},${info.zip}`,
       'Assessor\'s Parcel No': info.ain,
       'County': `  ${formData.county}`,
       'Name of Declarant': formData.name,
@@ -131,7 +144,7 @@ export default function Aff_death() {
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: 'street', label: 'Street' },
+    { id: 'street', label: 'Street (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)' },
     { id: 'county', label: 'County' },
     { id: 'name', label: 'Name' },
     { id: 'decedentName', label: 'decedent name' },
@@ -148,7 +161,7 @@ export default function Aff_death() {
     <div className="flex items-center justify-center min-h-screen py-2">
       <form className="bg-white shadow-md rounded-lg p-8 mb-4 flex flex-col w-full max-w-4xl">
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">Affidavit - Death of Trustee</h1>
-      
+
         {fieldsData.map((field) => (
           <div key={field.id} className="flex flex-col">
             <label className="text-sm font-semibold text-gray-700 mb-2" htmlFor={field.id}>
@@ -164,6 +177,7 @@ export default function Aff_death() {
         ))}
       
         <br />
+
         <button 
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
           type="button"
@@ -171,6 +185,26 @@ export default function Aff_death() {
         >
           Fill and Download PDF
         </button>
+
+        <br />
+        <br />
+
+        <button 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+          type="button"
+          onClick={downloadPdf}
+        >
+          Just download the fillable PDF
+        </button>
+        <br />
+        <button 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" 
+          type="button"
+          onClick={() => window.open('https://portal.assessor.lacounty.gov/', '_blank')}
+        >
+          Open LA County Assessor Portal
+        </button>
+
       </form>
     </div>
 
