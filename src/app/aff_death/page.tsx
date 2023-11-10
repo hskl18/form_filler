@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 
-export default function aff_death() {
+export default function Aff_death() {
 
   // Define the type for the expected fetch data
   type fetchDataType = {
@@ -47,11 +47,18 @@ export default function aff_death() {
   
   //form input data
   const [data, setFormData] = useState({
-    name: '',
-    spouse: '',
-    street: '',
-    county: '',
-    agent: '',
+    'street': '',
+    'county': '',
+    'name': '',
+    'decedentName': '',
+    'dateOfDeclarationOfTrust': '',
+    'signatoryName': '',
+    'dateOfDeed': '',
+    'documentNumber': '',
+    'bookNumber': '',
+    'pageNumber': '',
+    'trustName': '',
+  
   });
 
 
@@ -77,7 +84,6 @@ export default function aff_death() {
       'Name of Decedent': formData.decedentName,
       'Date of Declaration of Trust': `${formData.dateOfDeclarationOfTrust}`,  
       'Signed by': formData.signatoryName,
-
       'signed by continued': '',
 
       'Date of Deed': formData.dateOfDeed,
