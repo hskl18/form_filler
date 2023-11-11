@@ -159,7 +159,7 @@ export default function Homestead() {
 
       }
   
-      form.flatten();
+      // form.flatten(); will cost a bug
   
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
@@ -174,7 +174,7 @@ export default function Homestead() {
   // Define form fields for rendering
   const fieldsData = [
     { id: 'name', label: 'Name' },
-    { id: 'spouse', label: 'Spouse' },
+    { id: 'spouse', label: 'Spouse (Optional)' },
     { id: 'street', label: 'Street (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)' },
     // { id: 'city', label: 'City' },
     { id: 'county', label: 'County' },
