@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { saveAs } from 'file-saver';
 import Image from 'next/image';
-import tree from '../../public/tree.jpg';
+import tree from '../../public/tree.png';
 
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
         </div>
 
         <br />
-        
+
         <h1 className="text-4xl font-bold text-gray-800 mb-8">APAC Form Filler Home Page</h1>
 
         <button 
