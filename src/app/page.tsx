@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { saveAs } from 'file-saver';
+import Image from 'next/image';
+import tree from '../../public/tree.jpg';
 
 
 export default function Home() {
@@ -35,7 +37,15 @@ export default function Home() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
+      
       <div className="text-center">
+
+        <div className='w-full flex justify-center'>
+          <Image src={tree} width={200} height={200} alt="APAC Logo" />
+        </div>
+
+        <br />
+        
         <h1 className="text-4xl font-bold text-gray-800 mb-8">APAC Form Filler Home Page</h1>
 
         <button 
