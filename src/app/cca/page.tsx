@@ -145,32 +145,17 @@ export default function Aff_death() {
 
   // Define form fields for rendering
   const fieldsData = [
-    {
-      id: "street",
-      label:
-        "Address (street only) (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)",
-    },
-    { id: "county", label: "County" },
-    { id: "name", label: "Name (Surviving/Successor Trustee/Requstor)" },
-    { id: "decedentName", label: "decedent name" },
-    {
-      id: "dateOfDeclarationOfTrust",
-      label: "date of declaration of trust (Notary date of Trust)",
-    },
-    { id: "signatoryName", label: "signatory name (Trustor(s)" },
-    { id: "dateOfDeed", label: "date of deed (dirst recoding date of trust)" },
-    { id: "documentNumber", label: "document number (Instument #)" },
-    { id: "bookNumber", label: "book number" },
-    { id: "pageNumber", label: "page number" },
-    { id: "trustName", label: "trust name" },
-    { id: "feild", label: "Description (opional)" },
+    { id: "fnum", label: "file number" },
+    { id: "fname", label: "first name" },
+    { id: "lname", label: "last name" },
+    { id: "casenum", label: "case number" },
   ];
 
   return (
     <div className="flex min-h-screen items-center justify-center py-2">
       <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-white p-8 shadow-md">
         <h1 className="mb-6 text-2xl font-semibold text-gray-800">
-          Affidavit - Death of Trustee
+          CCA 全家桶
         </h1>
 
         {fieldsData.map((field) => (
@@ -203,23 +188,19 @@ export default function Aff_death() {
         <br />
         <br />
 
+        <h1 className="mb-6 text-2xl font-semibold text-gray-800">
+          just download the fillable PDF
+        </h1>
+
         <button
           className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           type="button"
           onClick={downloadPdf}
         >
-          Just download the fillable PDF
+          CCA form
         </button>
+
         <br />
-        <button
-          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          type="button"
-          onClick={() =>
-            window.open("https://portal.assessor.lacounty.gov/", "_blank")
-          }
-        >
-          Open LA County Assessor Portal
-        </button>
       </form>
     </div>
   );

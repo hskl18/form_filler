@@ -12,9 +12,13 @@
     "@splinetool/react-spline": "^2.2.6",
     "@splinetool/runtime": "^0.9.496",
     "axios": "^1.6.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-tailwindcss": "^3.13.0",
     "file-saver": "^2.0.5",
     "next": "14.0.1",
     "pdf-lib": "^1.17.1",
+    "prettier": "^3.0.3",
     "react": "^18",
     "react-dom": "^18"
   },
