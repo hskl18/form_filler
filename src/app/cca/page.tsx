@@ -6,15 +6,43 @@ import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 
 export default function Aff_death() {
-  const downloadPdf = async () => {
+  const downloadPdfa = async () => {
     try {
-      const pdfTemplateUrl = "../../files/AffidavitOfDeath.pdf";
+      const pdfTemplateUrl = "../../files/cca/2024 CCA Change Form.pdf";
 
       const response = await fetch(pdfTemplateUrl);
       if (!response.ok)
         throw new Error(`Error fetching PDF: ${response.statusText}`);
       const blob = await response.blob();
-      saveAs(blob, `AffidavitOfDeath.pdf`);
+      saveAs(blob, `2024 CCA Change Form.pdf`);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
+
+  const downloadPdfb = async () => {
+    try {
+      const pdfTemplateUrl = "../../files/cca/ATTESTATION FORM.pdf";
+
+      const response = await fetch(pdfTemplateUrl);
+      if (!response.ok)
+        throw new Error(`Error fetching PDF: ${response.statusText}`);
+      const blob = await response.blob();
+      saveAs(blob, `ATTESTATION FORM.pdf`);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    }
+  };
+
+  const downloadPdfc = async () => {
+    try {
+      const pdfTemplateUrl = "../../files/cca/AUTHORIZATION DELEGATE FORM.pdf";
+
+      const response = await fetch(pdfTemplateUrl);
+      if (!response.ok)
+        throw new Error(`Error fetching PDF: ${response.statusText}`);
+      const blob = await response.blob();
+      saveAs(blob, `AUTHORIZATION DELEGATE FORM.pdf`);
     } catch (error) {
       console.error("Error downloading PDF:", error);
     }
@@ -103,7 +131,7 @@ export default function Aff_death() {
     }
 
     try {
-      const pdfTemplateUrl = "../../files/cca/Attestation-Form-Income.pdf";
+      const pdfTemplateUrl = "../../files/cca/ATTESTATION FORM.pdf";
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
@@ -212,9 +240,26 @@ export default function Aff_death() {
         <button
           className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           type="button"
-          onClick={downloadPdf}
+          onClick={downloadPdfa}
         >
           CCA form
+        </button>
+        <br />
+
+        <button
+          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          type="button"
+          onClick={downloadPdfb}
+        >
+          Attestation Form
+        </button>
+        <br />
+        <button
+          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          type="button"
+          onClick={downloadPdfc}
+        >
+          AUTHORIZATION DELEGATE FORM
         </button>
 
         <br />
