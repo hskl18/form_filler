@@ -94,16 +94,13 @@ export default function Homestead() {
   const fillPdfAndDownload = async (formData: any) => {
     // Assuming searchProperty and legalDescription are implemented somewhere
     const info = await searchProperty(formData.street);
-    // const today = new Date();
-    // const today_str = `${today.getMonth() + 1}/${today.getDate()}`;
-    // const current_year = today.getFullYear();
     let baseData = {};
     if (formData.spouse === "") {
       baseData = {
         Text24: `${formData.name.toUpperCase()}`,
         Text2: formData.name,
         Text3: info.street,
-        Text4: `${info.city}, ${info.zip}`,
+        Text4: `${info.city} ${info.zip}`,
         // 'Text41': info.zip,
         Text5: `${formData.name}`,
         Text6: info.city,
@@ -141,9 +138,9 @@ export default function Homestead() {
     try {
       let pdfTemplateUrl = "";
       if (formData.spouse === "") {
-        pdfTemplateUrl = "../../files/HOMESTAED 1 OWNER FORM.pdf";
+        pdfTemplateUrl = "../../files/home/HOMESTAED 1 OWNER FORM.pdf";
       } else {
-        pdfTemplateUrl = "../../files/HOMESTEAD 2 OWNERS FORM.pdf";
+        pdfTemplateUrl = "../../files/home/HOMESTEAD 2 OWNERS FORM.pdf";
       }
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
@@ -166,9 +163,8 @@ export default function Homestead() {
       // form.flatten(); will cost a bug
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      if (formData.spouse === "")
-        saveAs(blob, `${formData.name} HOMESTAED 1 OWNER FORM.pdf`);
-      else saveAs(blob, `${formData.name} HOMESTAED 2 OWNER FORM.pdf`);
+      if (formData.spouse === "") saveAs(blob, `HOMESTAED 1 OWNER FORM.pdf`);
+      else saveAs(blob, `HOMESTAED 2 OWNER FORM.pdf`);
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }

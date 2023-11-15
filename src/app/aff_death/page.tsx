@@ -114,7 +114,7 @@ export default function Aff_death() {
     };
 
     try {
-      const pdfTemplateUrl = "../../files/AffidavitOfDeath.pdf";
+      const pdfTemplateUrl = "../../files/aff/AffidavitOfDeath.pdf";
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
