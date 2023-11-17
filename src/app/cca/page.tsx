@@ -180,7 +180,7 @@ export default function Aff_death() {
         formData.lname === "" &&
         formData.casenum === ""
       ) {
-        saveAs(blob, `2024 CCA Change Form.pdf`);
+        saveAs(blob, `Attestation-Form-Income`);
       } else {
         saveAs(
           blob,
@@ -227,7 +227,7 @@ export default function Aff_death() {
         formData.lname === "" &&
         formData.casenum === ""
       ) {
-        saveAs(blob, `2024 CCA Change Form.pdf`);
+        saveAs(blob, `AUTHORIZATION DELEGATE FORM`);
       } else {
         saveAs(
           blob,
