@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable camelcase */
 
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
@@ -92,6 +93,11 @@ export default function Homestead() {
 
   // handle pdf filling and download
   const fillPdfAndDownload = async (formData: any) => {
+    const today = new Date();
+    const current_year = today.getFullYear();
+    const current_date = today.getDate();
+    const current_month = today.getMonth() + 1;
+
     // Assuming searchProperty and legalDescription are implemented somewhere
     const info = await searchProperty(formData.street);
     let baseData = {};
@@ -163,8 +169,33 @@ export default function Homestead() {
       // form.flatten(); will cost a bug
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      if (formData.spouse === "") saveAs(blob, `HOMESTAED 1 OWNER FORM.pdf`);
-      else saveAs(blob, `HOMESTAED 2 OWNER FORM.pdf`);
+      if (formData.spouse === "") {
+        if (formData.name === "") {
+          saveAs(blob, `HOMESTAED 1 OWNER FORM.pdf`);
+        } else {
+          saveAs(
+            blob,
+            `${formData.name.toUpperCase()} ${current_year} HOMESTAED 1 OWNER FORM ${current_month
+              .toString()
+              .padStart(2, "0")}-${current_date
+              .toString()
+              .padStart(2, "0")}-${current_year}${current_year}.pdf`
+          );
+        }
+      } else {
+        if (formData.name === "") {
+          saveAs(blob, `HOMESTAED 2 OWNER FORM.pdf`);
+        } else {
+          saveAs(
+            blob,
+            `${formData.name.toUpperCase()} ${current_year} HOMESTAED 2 OWNER FORM ${current_month
+              .toString()
+              .padStart(2, "0")}-${current_date
+              .toString()
+              .padStart(2, "0")}-${current_year}${current_year}.pdf`
+          );
+        }
+      }
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }
@@ -177,7 +208,7 @@ export default function Homestead() {
     {
       id: "street",
       label:
-        "Street (Enter example: 5320 peck rd 29, instead 5320 peck rd #29)",
+        "Street (require!)(Enter example: 5320 peck rd 29, instead 5320 peck rd #29)",
     },
     { id: "agent", label: "Agent" },
   ];

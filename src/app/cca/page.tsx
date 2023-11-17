@@ -125,7 +125,26 @@ export default function Aff_death() {
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      saveAs(blob, `2024 CCA Change Form.pdf`);
+
+      if (
+        formData.fnum === "" &&
+        formData.fname === "" &&
+        formData.lname === "" &&
+        formData.casenum === ""
+      ) {
+        saveAs(blob, `2024 CCA Change Form.pdf`);
+      } else {
+        saveAs(
+          blob,
+          `${
+            formData.fnum
+          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CCA Change Form ${current_month
+            .toString()
+            .padStart(2, "0")}-${current_date
+            .toString()
+            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+        );
+      }
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }
@@ -154,7 +173,26 @@ export default function Aff_death() {
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      saveAs(blob, `Attestation-Form-Income.pdf`);
+
+      if (
+        formData.fnum === "" &&
+        formData.fname === "" &&
+        formData.lname === "" &&
+        formData.casenum === ""
+      ) {
+        saveAs(blob, `2024 CCA Change Form.pdf`);
+      } else {
+        saveAs(
+          blob,
+          `${
+            formData.fnum
+          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} Attestation-Form-Income ${current_month
+            .toString()
+            .padStart(2, "0")}-${current_date
+            .toString()
+            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+        );
+      }
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }
@@ -182,7 +220,26 @@ export default function Aff_death() {
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      saveAs(blob, `AUTHORIZATION DELEGATE FORM.pdf`);
+
+      if (
+        formData.fnum === "" &&
+        formData.fname === "" &&
+        formData.lname === "" &&
+        formData.casenum === ""
+      ) {
+        saveAs(blob, `2024 CCA Change Form.pdf`);
+      } else {
+        saveAs(
+          blob,
+          `${
+            formData.fnum
+          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} AUTHORIZATION DELEGATE FORM ${current_month
+            .toString()
+            .padStart(2, "0")}-${current_date
+            .toString()
+            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+        );
+      }
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }
