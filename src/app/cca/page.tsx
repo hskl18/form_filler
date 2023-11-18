@@ -247,11 +247,24 @@ export default function Aff_death() {
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: "fnum", label: "file number" },
-    { id: "fname", label: "first name" },
-    { id: "lname", label: "last name" },
-    { id: "casenum", label: "case number" },
+    { id: "fnum", label: "FILE NUMBER" },
+    { id: "fname", label: "FIRST NAME" },
+    { id: "lname", label: "LAST NAME" },
+    { id: "casenum", label: "CASE NUMBER" },
   ];
+
+  // Define a function to create a form field
+  function createButton(text: any, onClick: any) {
+    return (
+      <button
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+        type="button"
+        onClick={onClick}
+      >
+        {text}
+      </button>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center py-2">
@@ -284,40 +297,23 @@ export default function Aff_death() {
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
-          Fill and Download PDF
+          DOWNLOAD THE FILLED PDF
         </button>
 
         <br />
         <br />
 
         <h1 className="mb-6 text-2xl font-semibold text-gray-800">
-          just download the fillable PDF
+          DOWNLOAD THE FILLABLE PDF
         </h1>
 
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdfa}
-        >
-          CCA form
-        </button>
+        {createButton("CCA form", downloadPdfa)}
         <br />
 
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdfb}
-        >
-          Attestation Form
-        </button>
+        {createButton("ATTESATION FORM", downloadPdfb)}
         <br />
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdfc}
-        >
-          AUTHORIZATION DELEGATE FORM
-        </button>
+
+        {createButton("AUTHORIZATION DELEGATE FORM", downloadPdfc)}
 
         <br />
       </form>

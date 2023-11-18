@@ -82,7 +82,6 @@ export default function Homestead() {
     name: "",
     spouse: "",
     street: "",
-    agent: "",
   });
 
   // Handle form field changes
@@ -107,19 +106,12 @@ export default function Homestead() {
         Text2: formData.name,
         Text3: info.street,
         Text4: `${info.city} ${info.zip}`,
-        // 'Text41': info.zip,
         Text5: `${formData.name}`,
         Text6: info.city,
-        // Text7: formData.county,
-        // Text8: "California",
         Text9: `${info.street}, ${info.city}\n ${info.zip}`,
         Text10: `${info.legalDescription}`, // assuming this comes from the searchProperty function
-        // 'MMMM D': today_str,
-        // 'YYYY': `${current_year}`,
         "Text Field0": `${formData.name}`,
         Text14: formData.county,
-        // 'Text15': `${today_str}/${current_year}`,
-        Text16: formData.agent,
         Text17: formData.name,
       };
     } else {
@@ -133,11 +125,11 @@ export default function Homestead() {
         city: info.city,
         "street address": `${info.street}, ${info.city}\n ${info.zip}`,
         "print-name-1": formData.name,
+        "1print-name-1": formData.name,
         "print-name-2": formData.spouse,
+        "2print-name-2": formData.spouse,
         "legal-description": info.legalDescription,
-        Text16: formData.agent,
-        Text17: formData.name,
-        "Text-ud3lxdkmRq": "Los Angeles",
+        Text17: formData.name + " and " + formData.spouse,
       };
     }
 
@@ -203,14 +195,13 @@ export default function Homestead() {
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: "name", label: "Name" },
-    { id: "spouse", label: "Spouse (Optional)" },
+    { id: "name", label: "NAME" },
+    { id: "spouse", label: "SPOUSE (OPTIONAL)" },
     {
       id: "street",
       label:
-        "Street (require!)(Enter example: 5320 peck rd 29, instead 5320 peck rd #29)",
+        "ONLY STREET NAME (only required)(Enter example: 5320 peck rd 29, instead 5320 peck rd #29)",
     },
-    { id: "agent", label: "Agent" },
   ];
 
   return (
