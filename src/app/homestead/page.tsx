@@ -107,7 +107,7 @@ export default function Homestead() {
         Text3: info.street,
         Text4: `${info.city} ${info.zip}`,
         Text5: `${formData.name}`,
-        Text6: info.city,
+        Text6: info.city.slice(0, -3),
         Text9: `${info.street}, ${info.city}\n ${info.zip}`,
         Text10: `${info.legalDescription}`, // assuming this comes from the searchProperty function
         "Text Field0": `${formData.name}`,
@@ -122,14 +122,14 @@ export default function Homestead() {
         "mail-address-2": `${info.city} ${info.zip}`,
         "spouse-1": formData.name,
         "spouse-2": formData.spouse,
-        city: info.city,
+        city: info.city.slice(0, -3),
         "street address": `${info.street}, ${info.city}\n ${info.zip}`,
         "print-name-1": formData.name,
         "1print-name-1": formData.name,
         "print-name-2": formData.spouse,
         "2print-name-2": formData.spouse,
         "legal-description": info.legalDescription,
-        Text17: formData.name + " and " + formData.spouse,
+        Text17: formData.name + " AND " + formData.spouse,
       };
     }
 
