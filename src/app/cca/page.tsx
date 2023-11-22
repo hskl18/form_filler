@@ -102,7 +102,7 @@ export default function Aff_death() {
     };
 
     try {
-      const pdfTemplateUrl = "../../files/cca/2024 CCA Change Form.pdf";
+      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
         if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
