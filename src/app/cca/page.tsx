@@ -121,6 +121,7 @@ export default function Aff_death() {
           console.warn(`Value for field ${key} is not a string:`, value);
         }
       }
+      // form.flatten(); will cost a bug
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });

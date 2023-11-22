@@ -4,83 +4,14 @@
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
+import { searchProperty } from "../../../helper/func";
 
 export default function Homestead() {
-  const downloadPdf = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/Homestead.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `Homestead.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
-  const downloadPdfs = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/HomesteadSpouse.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `HomesteadSpouse.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
-  // Define the type for the expected fetch data
-  type fetchDataType = {
-    street: string;
-    city: string;
-    zip: string;
-    legalDescription: string;
-    ain: string;
-  };
-
-  async function searchProperty(address: any): Promise<fetchDataType> {
-    try {
-      const urlAddress = encodeURIComponent(address);
-      const response = await fetch(
-        `https://portal.assessor.lacounty.gov/api/search?search=${urlAddress}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      if (data && data.Parcels && data.Parcels.length > 0) {
-        const firstParcel = data.Parcels[0];
-        // Create the string with AIN and Legal Description
-        const result: fetchDataType = {
-          street: firstParcel.SitusStreet || "",
-          city: firstParcel.SitusCity || "",
-          zip: firstParcel.SitusZipCode || "",
-          ain: firstParcel.AIN || "",
-          legalDescription:
-            `AIN: ${firstParcel.AIN}\nLegal Description: ${firstParcel.LegalDescription}` ||
-            "",
-        };
-        return result;
-      } else {
-        throw new Error("No results found or empty data set returned.");
-      }
-    } catch (e: any) {
-      // Handle any errors that occur during the request
-      throw new Error(`There was a problem fetching the data: ${e.message}`);
-    }
-  }
-
   // form input data
   const [data, setFormData] = useState({
     name: "",
     spouse: "",
+    third: "",
     street: "",
   });
 
@@ -99,45 +30,68 @@ export default function Homestead() {
 
     // Assuming searchProperty and legalDescription are implemented somewhere
     const info = await searchProperty(formData.street);
-    let baseData = {};
-    if (formData.spouse === "") {
+    let baseData = {
+      "recording-name": `${formData.name.toUpperCase()}`,
+      name: formData.name,
+      "mail-address": info.street,
+      "mail-address-2": `${info.city} ${info.zip}`,
+      name1: `${formData.name}`,
+      city: info.city.slice(0, -3),
+      "street address": `${info.street}, ${info.city}\n ${info.zip}`,
+      "legal-description": `${info.legalDescription}`,
+    };
+    if (
+      formData.third !== "" &&
+      formData.spouse !== "" &&
+      formData.name !== ""
+    ) {
       baseData = {
-        Text24: `${formData.name.toUpperCase()}`,
-        Text2: formData.name,
-        Text3: info.street,
-        Text4: `${info.city} ${info.zip}`,
-        Text5: `${formData.name}`,
-        Text6: info.city.slice(0, -3),
-        Text9: `${info.street}, ${info.city}\n ${info.zip}`,
-        Text10: `${info.legalDescription}`, // assuming this comes from the searchProperty function
-        "Text Field0": `${formData.name}`,
-        Text14: formData.county,
-        Text17: formData.name,
+        ...baseData,
+        name2: `${formData.spouse}`,
+        name3: `${formData.third}`,
+        "print-name-1": `${formData.name.toUpperCase()}`,
+        "print-name-2": `${formData.spouse.toUpperCase()}`,
+        "print-name-3": `${formData.third.toUpperCase()}`,
+        "1print-name-1": `${formData.name.toUpperCase()}`,
+        "2print-name-2": `${formData.spouse.toUpperCase()}`,
+        "3print-name-3": `${formData.third.toUpperCase()}`,
+        for3:
+          formData.name + " AND " + formData.spouse + " AND " + formData.third,
+      };
+    } else if (
+      formData.spouse !== "" &&
+      formData.third === "" &&
+      formData.name !== ""
+    ) {
+      baseData = {
+        ...baseData,
+        name2: `${formData.spouse}`,
+        "print-name-1": `${formData.name.toUpperCase()}`,
+        "print-name-2": `${formData.spouse.toUpperCase()}`,
+        "1print-name-1": `${formData.name.toUpperCase()}`,
+        "2print-name-2": `${formData.spouse.toUpperCase()}`,
+        for2: formData.name + " AND " + formData.spouse,
       };
     } else {
       baseData = {
-        "recording-name": formData.name,
-        "mail-name": formData.name,
-        "mail-address": info.street,
-        "mail-address-2": `${info.city} ${info.zip}`,
-        "spouse-1": formData.name,
-        "spouse-2": formData.spouse,
-        city: info.city.slice(0, -3),
-        "street address": `${info.street}, ${info.city}\n ${info.zip}`,
-        "print-name-1": formData.name,
-        "1print-name-1": formData.name,
-        "print-name-2": formData.spouse,
-        "2print-name-2": formData.spouse,
-        "legal-description": info.legalDescription,
-        Text17: formData.name + " AND " + formData.spouse,
+        ...baseData,
+        for1: formData.name,
       };
     }
 
     try {
-      let pdfTemplateUrl = "";
-      if (formData.spouse === "") {
-        pdfTemplateUrl = "../../files/home/HOMESTAED 1 OWNER FORM.pdf";
-      } else {
+      let pdfTemplateUrl = "../../files/home/HOMESTEAD1.pdf";
+      if (
+        formData.third !== "" &&
+        formData.spouse !== "" &&
+        formData.name !== ""
+      ) {
+        pdfTemplateUrl = "../../files/home/HOMESTEAD 3 OWNERS FORM.pdf";
+      } else if (
+        formData.spouse !== "" &&
+        formData.third === "" &&
+        formData.name !== ""
+      ) {
         pdfTemplateUrl = "../../files/home/HOMESTEAD 2 OWNERS FORM.pdf";
       }
 
@@ -158,10 +112,9 @@ export default function Homestead() {
           console.warn(`Value for field ${key} is not a string:`, value);
         }
       }
-      // form.flatten(); will cost a bug
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      if (formData.spouse === "") {
+      if (formData.spouse === "" && formData.third === "") {
         if (formData.name === "") {
           saveAs(blob, `HOMESTAED 1 OWNER FORM.pdf`);
         } else {
@@ -174,13 +127,28 @@ export default function Homestead() {
               .padStart(2, "0")}-${current_year}${current_year}.pdf`
           );
         }
-      } else {
+      }
+      if (formData.spouse !== "" && formData.third === "") {
         if (formData.name === "") {
           saveAs(blob, `HOMESTAED 2 OWNER FORM.pdf`);
         } else {
           saveAs(
             blob,
             `${formData.name.toUpperCase()} ${current_year} HOMESTAED 2 OWNER FORM ${current_month
+              .toString()
+              .padStart(2, "0")}-${current_date
+              .toString()
+              .padStart(2, "0")}-${current_year}${current_year}.pdf`
+          );
+        }
+      }
+      if (formData.spouse !== "" && formData.third !== "") {
+        if (formData.name === "") {
+          saveAs(blob, `HOMESTAED 3 OWNER FORM.pdf`);
+        } else {
+          saveAs(
+            blob,
+            `${formData.name.toUpperCase()} ${current_year} HOMESTAED 3 OWNER FORM ${current_month
               .toString()
               .padStart(2, "0")}-${current_date
               .toString()
@@ -197,6 +165,7 @@ export default function Homestead() {
   const fieldsData = [
     { id: "name", label: "NAME" },
     { id: "spouse", label: "SPOUSE (OPTIONAL)" },
+    { id: "third", label: "THIRD" },
     {
       id: "street",
       label:
@@ -240,22 +209,6 @@ export default function Homestead() {
         <br />
         <br />
 
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdf}
-        >
-          Just download the fillable PDF
-        </button>
-        <br />
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdfs}
-        >
-          Just download the fillable PDF for Spouse
-        </button>
-        <br />
         <button
           className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           type="button"

@@ -6,8 +6,8 @@ import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Home Stead Filler",
-  description: "Fill out homestead form",
+  title: "All Fillable Forms",
+  description: "To download all fillable forms",
 };
 
 export default function RootLayout({
