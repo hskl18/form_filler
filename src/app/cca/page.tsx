@@ -8,7 +8,7 @@ import { saveAs } from "file-saver";
 export default function Aff_death() {
   const downloadPdfa = async () => {
     try {
-      const pdfTemplateUrl = "../../files/cca/2024 CCA Change Form.pdf";
+      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
 
       const response = await fetch(pdfTemplateUrl);
       if (!response.ok)
