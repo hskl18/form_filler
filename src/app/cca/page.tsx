@@ -96,9 +96,6 @@ export default function Aff_death() {
       "Case Number": formData.casenum,
       "First Name": formData.fname,
       "Last Name": formData.lname,
-      MM: current_month.toString().padStart(2, "0"),
-      DD: current_date.toString().padStart(2, "0"),
-      YYYY: current_year.toString().padStart(4, "0"),
     };
 
     try {
