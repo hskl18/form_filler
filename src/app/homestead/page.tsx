@@ -30,23 +30,21 @@ export default function Homestead() {
 
     // Assuming searchProperty and legalDescription are implemented somewhere
     const info = await searchProperty(formData.street);
-    let baseData = {
-      "recording-name": `${formData.name.toUpperCase()}`,
-      name: formData.name,
-      "mail-address": info.street,
-      "mail-address-2": `${info.city} ${info.zip}`,
-      name1: `${formData.name}`,
-      city: info.city.slice(0, -3),
-      "street address": `${info.street}, ${info.city}\n ${info.zip}`,
-      "legal-description": `${info.legalDescription}`,
-    };
+    let baseData = {};
     if (
       formData.third !== "" &&
       formData.spouse !== "" &&
       formData.name !== ""
     ) {
       baseData = {
-        ...baseData,
+        "recording-name": `${formData.name.toUpperCase()}`,
+        name: formData.name,
+        "mail-address": info.street,
+        "mail-address-2": `${info.city} ${info.zip}`,
+        name1: `${formData.name}`,
+        city: info.city.slice(0, -3),
+        "street address": `${info.street}, ${info.city}\n ${info.zip}`,
+        "legal-description": `${info.legalDescription}`,
         name2: `${formData.spouse}`,
         name3: `${formData.third}`,
         "print-name-1": `${formData.name.toUpperCase()}`,
@@ -64,7 +62,14 @@ export default function Homestead() {
       formData.name !== ""
     ) {
       baseData = {
-        ...baseData,
+        "recording-name": `${formData.name.toUpperCase()}`,
+        name: formData.name,
+        "mail-address": info.street,
+        "mail-address-2": `${info.city} ${info.zip}`,
+        name1: `${formData.name}`,
+        city: info.city.slice(0, -3),
+        "street address": `${info.street}, ${info.city}\n ${info.zip}`,
+        "legal-description": `${info.legalDescription}`,
         name2: `${formData.spouse}`,
         "print-name-1": `${formData.name.toUpperCase()}`,
         "print-name-2": `${formData.spouse.toUpperCase()}`,
@@ -74,7 +79,14 @@ export default function Homestead() {
       };
     } else {
       baseData = {
-        ...baseData,
+        "recording-name": `${formData.name.toUpperCase()}`,
+        name: formData.name,
+        "mail-address": info.street,
+        "mail-address-2": `${info.city} ${info.zip}`,
+        name1: `${formData.name}`,
+        city: info.city.slice(0, -3),
+        "street address": `${info.street}, ${info.city}\n ${info.zip}`,
+        "legal-description": `${info.legalDescription}`,
         for1: formData.name,
       };
     }
