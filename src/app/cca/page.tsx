@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from "react";
-import { PDFDocument, StandardFonts } from "pdf-lib";
+import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 
 export default function Aff_death() {
