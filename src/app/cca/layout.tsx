@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Form Filler",
-  description: "Generate a filled form",
+  description: "Generate all cca filled form",
 };
 
 export default function RootLayout({
