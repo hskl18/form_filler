@@ -45,8 +45,8 @@ export default function Aff_death() {
 
     const baseData_b = {
       "Case Number": `${formData.casenum}`,
-      "First Name": formData.fname + " ",
-      "Last Name": formData.lname + " ",
+      "First Name": formData.fname,
+      "Last Name": formData.lname,
     };
 
     const baseData_c = {
@@ -59,6 +59,9 @@ export default function Aff_death() {
     const baseData_d = {
       name: formData.fname + " " + formData.lname,
       date: today_str,
+      "Case Number": `${formData.casenum}`,
+      "First Name": formData.fname,
+      "Last Name": formData.lname,
     };
 
     try {
