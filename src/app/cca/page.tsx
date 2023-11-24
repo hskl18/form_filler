@@ -248,7 +248,10 @@ export default function Aff_death() {
     { id: "fnum", label: "FILE NUMBER" },
     { id: "fname", label: "FIRST NAME" },
     { id: "lname", label: "LAST NAME" },
-    { id: "casenum", label: "CASE NUMBER" },
+    {
+      id: "casenum",
+      label: "CASE NUMBER (Must be within 10 digit or it won't download)",
+    },
   ];
 
   return (
