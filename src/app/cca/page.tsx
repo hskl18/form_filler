@@ -2,52 +2,10 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from "react";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, StandardFonts } from "pdf-lib";
 import { saveAs } from "file-saver";
 
 export default function Aff_death() {
-  const downloadPdfa = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `2024 CCA Change Form.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
-  const downloadPdfb = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/cca/ATTESTATION FORM.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `ATTESTATION FORM.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
-  const downloadPdfc = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/cca/AUTHORIZATION DELEGATE FORM.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `AUTHORIZATION DELEGATE FORM.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
   // form input data
   const [data, setFormData] = useState({
     fnum: "",
@@ -85,6 +43,12 @@ export default function Aff_death() {
       case: formData.casenum,
     };
 
+    const baseData_b = {
+      "Case Number": `${formData.casenum}`,
+      "First Name": formData.fname + " ",
+      "Last Name": formData.lname + " ",
+    };
+
     const baseData_c = {
       file_num: formData.fnum,
       name: formData.fname + " " + formData.lname,
@@ -92,10 +56,9 @@ export default function Aff_death() {
       date: today_str,
     };
 
-    const baseData_b = {
-      "Case Number": formData.casenum,
-      "First Name": formData.fname,
-      "Last Name": formData.lname,
+    const baseData_d = {
+      name: formData.fname + " " + formData.lname,
+      date: today_str,
     };
 
     try {
@@ -114,11 +77,8 @@ export default function Aff_death() {
 
         if (typeof value === "string") {
           field.setText(value);
-        } else {
-          console.warn(`Value for field ${key} is not a string:`, value);
         }
       }
-      // form.flatten(); will cost a bug
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -160,13 +120,8 @@ export default function Aff_death() {
       for (const [key, value] of Object.entries(baseData_b)) {
         const field = form.getTextField(key);
 
-        if (typeof value === "string") {
-          field.setText(value);
-        } else {
-          console.warn(`Value for field ${key} is not a string:`, value);
-        }
+        if (typeof value === "string") field.setText(value);
       }
-      // form.flatten(); will cost a bug
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -210,8 +165,6 @@ export default function Aff_death() {
 
         if (typeof value === "string") {
           field.setText(value);
-        } else {
-          console.warn(`Value for field ${key} is not a string:`, value);
         }
       }
 
@@ -240,6 +193,51 @@ export default function Aff_death() {
     } catch (error: any) {
       console.error("Error filling PDF:", error);
     }
+
+    try {
+      const pdfTemplateUrl = "../../files/cca/CASH INCOME LETTER.pdf";
+
+      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
+        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
+        return res.arrayBuffer();
+      });
+
+      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const form = pdfDoc.getForm();
+
+      for (const [key, value] of Object.entries(baseData_d)) {
+        const field = form.getTextField(key);
+
+        if (typeof value === "string") {
+          field.setText(value);
+        }
+      }
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      if (
+        formData.fnum === "" &&
+        formData.fname === "" &&
+        formData.lname === "" &&
+        formData.casenum === ""
+      ) {
+        saveAs(blob, `CASH INCOME LETTER.pdf`);
+      } else {
+        saveAs(
+          blob,
+          `${
+            formData.fnum
+          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CASH INCOME LETTER ${current_month
+            .toString()
+            .padStart(2, "0")}-${current_date
+            .toString()
+            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+        );
+      }
+    } catch (error: any) {
+      console.error("Error filling PDF:", error);
+    }
   };
 
   // Define form fields for rendering
@@ -249,19 +247,6 @@ export default function Aff_death() {
     { id: "lname", label: "LAST NAME" },
     { id: "casenum", label: "CASE NUMBER" },
   ];
-
-  // Define a function to create a form field
-  function createButton(text: any, onClick: any) {
-    return (
-      <button
-        className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-        type="button"
-        onClick={onClick}
-      >
-        {text}
-      </button>
-    );
-  }
 
   return (
     <div className="flex min-h-screen items-center justify-center py-2">
@@ -290,29 +275,12 @@ export default function Aff_death() {
         <br />
 
         <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
-          DOWNLOAD THE FILLED PDF
+          领取全家桶
         </button>
-
-        <br />
-        <br />
-
-        <h1 className="mb-6 text-2xl font-semibold text-gray-800">
-          DOWNLOAD THE FILLABLE PDF
-        </h1>
-
-        {createButton("CCA form", downloadPdfa)}
-        <br />
-
-        {createButton("ATTESATION FORM", downloadPdfb)}
-        <br />
-
-        {createButton("AUTHORIZATION DELEGATE FORM", downloadPdfc)}
-
-        <br />
       </form>
     </div>
   );
