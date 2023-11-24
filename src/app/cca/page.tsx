@@ -278,7 +278,7 @@ export default function Aff_death() {
         <br />
 
         <button
-          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >

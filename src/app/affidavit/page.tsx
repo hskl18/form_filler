@@ -6,20 +6,6 @@ import { PDFDocument } from "pdf-lib";
 import { saveAs } from "file-saver";
 
 export default function Aff_death() {
-  const downloadPdf = async () => {
-    try {
-      const pdfTemplateUrl = "../../files/AffidavitOfDeath.pdf";
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, `AffidavitOfDeath.pdf`);
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
-    }
-  };
-
   // Define the type for the expected fetch data
   type fetchDataType = {
     street: string;
@@ -157,7 +143,7 @@ export default function Aff_death() {
       id: "dateOfDeclarationOfTrust",
       label: "date of declaration of trust (Notary date of Trust)",
     },
-    { id: "signatoryName", label: "signatory name (Trustor(s)" },
+    { id: "signatoryName", label: "signatory name (Trustor(s))" },
     { id: "dateOfDeed", label: "date of deed (dirst recoding date of trust)" },
     { id: "documentNumber", label: "document number (Instument #)" },
     { id: "bookNumber", label: "book number" },
@@ -193,26 +179,15 @@ export default function Aff_death() {
         <br />
 
         <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
           Fill and Download PDF
         </button>
 
-        <br />
-        <br />
-
         <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-          type="button"
-          onClick={downloadPdf}
-        >
-          Just download the fillable PDF
-        </button>
-        <br />
-        <button
-          className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
           type="button"
           onClick={() =>
             window.open("https://portal.assessor.lacounty.gov/", "_blank")

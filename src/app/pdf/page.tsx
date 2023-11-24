@@ -50,7 +50,7 @@ export default function Homestead() {
 
   return (
     <div className="flex min-h-screen items-center justify-center py-2">
-      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-gray-100 p-8 shadow-md">
+      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-gray-300 p-8 shadow-md">
         <div className="flex w-full justify-center">
           <Image src={tree} width={200} height={200} alt="APAC Logo" />
         </div>

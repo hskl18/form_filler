@@ -27,7 +27,7 @@ export default function Home() {
           <div key={tool.id} className="flex flex-col">
             <Link
               href={tool.link}
-              className="mb-2 rounded-lg bg-gray-400 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-400"
+              className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
             >
               {tool.id}
             </Link>
