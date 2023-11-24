@@ -8,7 +8,7 @@ import React from "react";
 
 export default function Home() {
   const tools = [
-    { id: "CCA 全家桶", link: "/CCA" },
+    { id: "CCA 全家桶", link: "/cca" },
     { id: "Homestead 桶", link: "/homestead" },
     { id: "Affidavit, Death of Trustee", link: "/affidavit" },
     { id: "->全部文件桶<-", link: "/pdf" },
