@@ -10,7 +10,7 @@ export default function Homestead() {
   const forms = [
     {
       id: "HOMESTAED 1 OWNER FORM",
-      link: "../../files/home/HOMESTAED1.pdf",
+      link: "../../files/home/HOMESTEAD1.pdf",
     },
     {
       id: "HOMESTEAD 2 OWNERS FORM",
