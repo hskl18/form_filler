@@ -60,51 +60,6 @@ export default function Aff_death() {
     };
 
     try {
-      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
-
-      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
-        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
-        return res.arrayBuffer();
-      });
-
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const form = pdfDoc.getForm();
-
-      for (const [key, value] of Object.entries(baseData_a)) {
-        const field = form.getTextField(key);
-
-        if (typeof value === "string") {
-          field.setText(value);
-        }
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      if (
-        formData.fnum === "" &&
-        formData.fname === "" &&
-        formData.lname === "" &&
-        formData.casenum === ""
-      ) {
-        saveAs(blob, `2024 CCA Change Form.pdf`);
-      } else {
-        saveAs(
-          blob,
-          `${
-            formData.fnum
-          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CCA Change Form ${current_month
-            .toString()
-            .padStart(2, "0")}-${current_date
-            .toString()
-            .padStart(2, "0")}-${current_year}${current_year}.pdf`
-        );
-      }
-    } catch (error: any) {
-      console.error("Error filling PDF:", error);
-    }
-
-    try {
       const pdfTemplateUrl = "../../files/cca/ATTESTATION FORM.pdf";
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
@@ -182,6 +137,51 @@ export default function Aff_death() {
           `${
             formData.fnum
           } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CASH INCOME LETTER ${current_month
+            .toString()
+            .padStart(2, "0")}-${current_date
+            .toString()
+            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+        );
+      }
+    } catch (error: any) {
+      console.error("Error filling PDF:", error);
+    }
+
+    try {
+      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
+
+      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
+        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
+        return res.arrayBuffer();
+      });
+
+      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const form = pdfDoc.getForm();
+
+      for (const [key, value] of Object.entries(baseData_a)) {
+        const field = form.getTextField(key);
+
+        if (typeof value === "string") {
+          field.setText(value);
+        }
+      }
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      if (
+        formData.fnum === "" &&
+        formData.fname === "" &&
+        formData.lname === "" &&
+        formData.casenum === ""
+      ) {
+        saveAs(blob, `2024 CCA Change Form.pdf`);
+      } else {
+        saveAs(
+          blob,
+          `${
+            formData.fnum
+          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CCA Change Form ${current_month
             .toString()
             .padStart(2, "0")}-${current_date
             .toString()
