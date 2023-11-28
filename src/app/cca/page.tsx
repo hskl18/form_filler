@@ -13,7 +13,6 @@ export default function Aff_death() {
     lname: "",
     casenum: "",
   });
-
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -41,19 +40,15 @@ export default function Aff_death() {
         "/" +
         current_year.toString().slice(-2),
       case: formData.casenum,
+      file_num: formData.fnum,
+      name1: formData.fname + " " + formData.lname,
+      case_id: formData.casenum,
     };
 
     const baseData_b = {
       "Case Number": `${formData.casenum}`,
       "First Name": formData.fname,
       "Last Name": formData.lname,
-    };
-
-    const baseData_c = {
-      file_num: formData.fnum,
-      name: formData.fname + " " + formData.lname,
-      case_id: formData.casenum,
-      date: today_str,
     };
 
     const baseData_d = {
@@ -153,51 +148,6 @@ export default function Aff_death() {
     }
 
     try {
-      const pdfTemplateUrl = "../../files/cca/AUTHORIZATION DELEGATE FORM.pdf";
-
-      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
-        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
-        return res.arrayBuffer();
-      });
-
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const form = pdfDoc.getForm();
-
-      for (const [key, value] of Object.entries(baseData_c)) {
-        const field = form.getTextField(key);
-
-        if (typeof value === "string") {
-          field.setText(value);
-        }
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      if (
-        formData.fnum === "" &&
-        formData.fname === "" &&
-        formData.lname === "" &&
-        formData.casenum === ""
-      ) {
-        saveAs(blob, `AUTHORIZATION DELEGATE FORM`);
-      } else {
-        saveAs(
-          blob,
-          `${
-            formData.fnum
-          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} AUTHORIZATION DELEGATE FORM ${current_month
-            .toString()
-            .padStart(2, "0")}-${current_date
-            .toString()
-            .padStart(2, "0")}-${current_year}${current_year}.pdf`
-        );
-      }
-    } catch (error: any) {
-      console.error("Error filling PDF:", error);
-    }
-
-    try {
       const pdfTemplateUrl = "../../files/cca/CASH INCOME LETTER.pdf";
 
       const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
@@ -248,10 +198,7 @@ export default function Aff_death() {
     { id: "fnum", label: "FILE NUMBER" },
     { id: "fname", label: "FIRST NAME" },
     { id: "lname", label: "LAST NAME" },
-    {
-      id: "casenum",
-      label: "CASE NUMBER (Must be within 10 digit or it won't download)",
-    },
+    { id: "casenum", label: "CASE NUMBER" },
   ];
 
   return (
@@ -281,7 +228,7 @@ export default function Aff_death() {
         <br />
 
         <button
-          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
