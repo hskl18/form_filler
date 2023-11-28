@@ -30,8 +30,14 @@ export default function Homestead() {
       id: "AUTHORIZATION DELEGATE FORM.pdf",
       link: "../../files/cca/AUTHORIZATION DELEGATE FORM.pdf",
     },
-    { id: "null", link: "null" },
     { id: "Affidavit Of Death", link: "../../files/aff/AffidavitOfDeath.pdf" },
+    { id: "null", link: "null" },
+
+    { id: "Family Trust", link: "../../files/other/FAMILY TRUST.pdf" },
+    {
+      id: "LIFE FROM FOR NON MED APP",
+      link: "../../files/other/LIFE FROM FOR NON MED APP.pdf",
+    },
   ];
 
   const downloadPdf = async (id: string, link: string) => {
