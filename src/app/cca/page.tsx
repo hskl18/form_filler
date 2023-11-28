@@ -43,6 +43,7 @@ export default function Aff_death() {
       file_num: formData.fnum,
       name1: formData.fname + " " + formData.lname,
       case_id: formData.casenum,
+      date1: today_str,
     };
 
     const baseData_b = {
