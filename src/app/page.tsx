@@ -16,6 +16,11 @@ export default function Home() {
       id: "HEALTH RISK ASSESSMENT （健康调查表）",
       link: "https://forms.gle/izKG5vvZJp5oMcn38",
     },
+    {
+      id: "修改，更进，或者添加新的表格点我！",
+      link: "mailto:thb182003@gmail.com",
+      isEmail: true,
+    },
   ];
   return (
     <div className="flex h-screen items-center justify-center bg-gray-300">
@@ -29,12 +34,23 @@ export default function Home() {
         </h1>
         {tools.map((tool) => (
           <div key={tool.id} className="flex flex-col">
-            <Link
-              href={tool.link}
-              className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
-            >
-              {tool.id}
-            </Link>
+            {tool.link.startsWith("https://forms.gle/") ? (
+              <a
+                href={tool.link}
+                target="_blank" // This opens the link in a new tab
+                rel="noopener noreferrer" // This is for security reasons
+                className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+              >
+                {tool.id}
+              </a>
+            ) : (
+              <Link
+                href={tool.link}
+                className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+              >
+                {tool.id}
+              </Link>
+            )}
           </div>
         ))}
       </div>
