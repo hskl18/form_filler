@@ -12,6 +12,7 @@ export default function Aff_death() {
     fname: "",
     lname: "",
     casenum: "",
+    phone: "",
   });
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +45,7 @@ export default function Aff_death() {
       name1: formData.fname + " " + formData.lname,
       case_id: formData.casenum,
       date1: today_str,
+      phone: formData.phone,
     };
 
     const baseData_b = {
@@ -200,6 +202,7 @@ export default function Aff_death() {
     { id: "fname", label: "FIRST NAME" },
     { id: "lname", label: "LAST NAME" },
     { id: "casenum", label: "CASE NUMBER" },
+    { id: "phone", label: "PHONE" },
   ];
 
   return (

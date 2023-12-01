@@ -185,6 +185,17 @@ export default function Homestead() {
     },
   ];
 
+  const searchItem = [
+    {
+      label: "Open LA County Assessor Portal",
+      url: "https://portal.assessor.lacounty.gov/",
+    },
+    {
+      label: "Open ORANGE County Assessor Portal",
+      url: "https://www.ocgis.com/ocpw/landrecords/",
+    },
+  ];
+
   return (
     <div className="flex min-h-screen items-center justify-center py-2">
       <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-white p-8 shadow-md">
@@ -217,16 +228,16 @@ export default function Homestead() {
         >
           Fill and Download PDF
         </button>
-
-        <button
-          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
-          type="button"
-          onClick={() =>
-            window.open("https://portal.assessor.lacounty.gov/", "_blank")
-          }
-        >
-          Open LA County Assessor Portal
-        </button>
+        {searchItem.map((item) => (
+          <button
+            key={item.label}
+            className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+            type="button"
+            onClick={() => window.open(item.url, "_blank")}
+          >
+            {item.label}
+          </button>
+        ))}
       </form>
     </div>
   );
