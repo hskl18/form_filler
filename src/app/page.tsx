@@ -12,6 +12,10 @@ export default function Home() {
     { id: "Homestead 桶", link: "/homestead" },
     { id: "Affidavit, Death of Trustee", link: "/affidavit" },
     { id: "->全部文件桶<-", link: "/pdf" },
+    {
+      id: "HEALTH RISK ASSESSMENT （健康调查表）",
+      link: "https://forms.gle/izKG5vvZJp5oMcn38",
+    },
   ];
   return (
     <div className="flex h-screen items-center justify-center bg-gray-300">
