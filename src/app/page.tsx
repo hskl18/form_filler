@@ -18,7 +18,7 @@ export default function Home() {
     },
     {
       id: "修改，更进，或者添加新的表格点我！",
-      link: "mailto:thb182003@gmail.com",
+      link: "https://mail.google.com/mail/?view=cm&to=thb182003@gmail.com&su=Regarding form-filling website",
       isEmail: true,
     },
   ];
@@ -34,7 +34,8 @@ export default function Home() {
         </h1>
         {tools.map((tool) => (
           <div key={tool.id} className="flex flex-col">
-            {tool.link.startsWith("https://forms.gle/") ? (
+            {tool.link.startsWith("https://forms.gle/") ||
+            tool.link.startsWith("https://mail.google.com") ? (
               <a
                 href={tool.link}
                 target="_blank" // This opens the link in a new tab
