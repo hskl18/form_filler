@@ -38,15 +38,15 @@ export default function Homestead() {
     ) {
       baseData = {
         "recording-name": `${formData.name.toUpperCase()}`,
-        name: formData.name,
+        name: formData.name.toUpperCase(),
         "mail-address": info.street,
         "mail-address-2": `${info.city} ${info.zip}`,
-        name1: `${formData.name}`,
+        name1: `${formData.name.toUpperCase()}`,
         city: info.city.slice(0, -3),
         "street address": `${info.street}, ${info.city}\n ${info.zip}`,
         "legal-description": `${info.legalDescription}`,
-        name2: `${formData.spouse}`,
-        name3: `${formData.third}`,
+        name2: `${formData.spouse.toUpperCase()}`,
+        name3: `${formData.third.toUpperCase()}`,
         "print-name-1": `${formData.name.toUpperCase()}`,
         "print-name-2": `${formData.spouse.toUpperCase()}`,
         "print-name-3": `${formData.third.toUpperCase()}`,
@@ -54,7 +54,11 @@ export default function Homestead() {
         "2print-name-2": `${formData.spouse.toUpperCase()}`,
         "3print-name-3": `${formData.third.toUpperCase()}`,
         for3:
-          formData.name + " AND " + formData.spouse + " AND " + formData.third,
+          formData.name.toUpperCase() +
+          " AND " +
+          formData.spouse.toUpperCase() +
+          " AND " +
+          formData.third.toUpperCase(),
       };
     } else if (
       formData.spouse !== "" &&
@@ -63,31 +67,32 @@ export default function Homestead() {
     ) {
       baseData = {
         "recording-name": `${formData.name.toUpperCase()}`,
-        name: formData.name,
+        name: formData.name.toUpperCase(),
         "mail-address": info.street,
         "mail-address-2": `${info.city} ${info.zip}`,
-        name1: `${formData.name}`,
+        name1: `${formData.name.toUpperCase()}`,
         city: info.city.slice(0, -3),
         "street address": `${info.street}, ${info.city}\n ${info.zip}`,
         "legal-description": `${info.legalDescription}`,
-        name2: `${formData.spouse}`,
+        name2: `${formData.spouse.toUpperCase()}`,
         "print-name-1": `${formData.name.toUpperCase()}`,
         "print-name-2": `${formData.spouse.toUpperCase()}`,
         "1print-name-1": `${formData.name.toUpperCase()}`,
         "2print-name-2": `${formData.spouse.toUpperCase()}`,
-        for2: formData.name + " AND " + formData.spouse,
+        for2:
+          formData.name.toUpperCase() + " AND " + formData.spouse.toUpperCase(),
       };
     } else {
       baseData = {
         "recording-name": `${formData.name.toUpperCase()}`,
-        name: formData.name,
+        name: formData.name.toUpperCase(),
         "mail-address": info.street,
         "mail-address-2": `${info.city} ${info.zip}`,
-        name1: `${formData.name}`,
+        name1: `${formData.name.toUpperCase()}`,
         city: info.city.slice(0, -3),
         "street address": `${info.street}, ${info.city}\n ${info.zip}`,
         "legal-description": `${info.legalDescription}`,
-        for1: formData.name,
+        for1: formData.name.toUpperCase(),
       };
     }
 

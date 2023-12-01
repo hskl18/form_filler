@@ -57,6 +57,7 @@ export default function Aff_death() {
     const baseData_d = {
       name: formData.fname + " " + formData.lname,
       date: today_str,
+      what: formData.phone,
       "Case Number": `${formData.casenum}`,
       "First Name": formData.fname,
       "Last Name": formData.lname,
