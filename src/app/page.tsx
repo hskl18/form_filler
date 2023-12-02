@@ -17,6 +17,10 @@ export default function Home() {
       link: "https://forms.gle/izKG5vvZJp5oMcn38",
     },
     {
+      id: "VIEW RESPONSE（健康调查表）",
+      link: "https://docs.google.com/spreadsheets/d/1CzbKtRk92zDR7U8bvlubqRBiYIjs7LWk8zgUVH1cUQw/edit?usp=sharing",
+    },
+    {
       id: "修改，更进，或者添加新的表格点我！",
       link: "https://mail.google.com/mail/?view=cm&to=thb182003@gmail.com&su=Regarding form-filling website",
       isEmail: true,
@@ -34,8 +38,7 @@ export default function Home() {
         </h1>
         {tools.map((tool) => (
           <div key={tool.id} className="flex flex-col">
-            {tool.link.startsWith("https://forms.gle/") ||
-            tool.link.startsWith("https://mail.google.com") ? (
+            {tool.link.startsWith("https://") ? (
               <a
                 href={tool.link}
                 target="_blank" // This opens the link in a new tab
