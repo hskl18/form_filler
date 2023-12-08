@@ -26,49 +26,51 @@ export default function Aff_death() {
     const today_str = `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`;
-    const current_year = today.getFullYear();
-    const current_date = today.getDate();
     const current_month = today.getMonth() + 1;
 
     const nameParts = formData.name.split(" ");
     const lastName = nameParts.pop(); // Removes and returns the last element
     const firstName = nameParts.join(" "); // Joins the remaining elements
+    const caseNum = formData.casenum <= 10 ? formData.casenum : "";
 
     // Assuming searchProperty and legalDescription are implemented somewhere
     const baseData_a = {
-      agent: formData.agent,
-      filenum: formData.fnum,
-      name: formData.name,
+      agent: formData.agent || " ",
+      filenum: formData.fnum || " ",
+      name: formData.name || " ",
       date:
         current_month +
-        "/" +
-        current_date +
-        "/" +
-        current_year.toString().slice(-2),
-      case: formData.casenum,
-      file_num: formData.fnum,
-      name1: formData.name,
-      case_id: formData.casenum,
-      date1: today_str,
-      phone: formData.phone,
+          "/" +
+          today.getDate() +
+          "/" +
+          today.getFullYear().toString().slice(-2) || " ",
+      case: caseNum || " ",
+      file_num: formData.fnum || " ",
+      name1: formData.name || " ",
+      case_id: caseNum || " ",
+      date1: today_str || " ",
+      phone: formData.phone || " ",
     };
 
     const baseData_b = {
-      "Case Number": `${formData.casenum}`,
-      "First Name": firstName,
-      "Last Name": lastName,
+      "Case Number": caseNum || " ",
+      "First Name": firstName || " ",
+      "Last Name": lastName || " ",
+      MM: current_month.toString().padStart(2, "0") || " ",
+      DD: today.getDate().toString().padStart(2, "0") || " ",
+      YYYY: today.getFullYear().toString() || " ",
     };
 
     const baseData_d = {
-      name: formData.name,
-      date: today_str,
-      what: formData.phone,
-      "Case Number": `${formData.casenum}`,
-      "First Name": firstName,
-      "Last Name": lastName,
-      MM: current_month.toString().padStart(2, "0"),
-      DD: current_date.toString().padStart(2, "0"),
-      YYYY: current_year.toString(),
+      name: formData.name || " ",
+      date: today_str || " ",
+      what: formData.phone || " ",
+      "Case Number": caseNum || " ",
+      "First Name": firstName || " ",
+      "Last Name": lastName || " ",
+      MM: current_month.toString().padStart(2, "0") || " ",
+      DD: today.getDate().toString().padStart(2, "0") || " ",
+      YYYY: today.getFullYear().toString() || " ",
     };
 
     try {
@@ -103,11 +105,12 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.name.toUpperCase()}  ${current_year} Attestation-Form-Income ${current_month
+          } ${formData.name.toUpperCase()} ${today.getFullYear()} Attestation-Form-Income ${current_month
             .toString()
-            .padStart(2, "0")}-${current_date
+            .padStart(2, "0")}-${today
+            .getDate()
             .toString()
-            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
         );
       }
     } catch (error: any) {
@@ -148,11 +151,12 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.name.toUpperCase()} ${current_year} CASH INCOME LETTER ${current_month
+          } ${formData.name.toUpperCase()} ${today.getFullYear()} CASH INCOME LETTER ${current_month
             .toString()
-            .padStart(2, "0")}-${current_date
+            .padStart(2, "0")}-${today
+            .getDate()
             .toString()
-            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
         );
       }
     } catch (error: any) {
@@ -193,11 +197,12 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.name.toUpperCase()}  ${current_year} CCA Change Form ${current_month
+          } ${formData.name.toUpperCase()} ${today.getFullYear()} CCA Change Form ${current_month
             .toString()
-            .padStart(2, "0")}-${current_date
+            .padStart(2, "0")}-${today
+            .getDate()
             .toString()
-            .padStart(2, "0")}-${current_year}${current_year}.pdf`
+            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
         );
       }
     } catch (error: any) {
