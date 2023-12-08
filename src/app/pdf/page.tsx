@@ -38,6 +38,22 @@ export default function Homestead() {
       id: "LIFE FROM FOR NON MED APP",
       link: "../../files/other/LIFE FROM FOR NON MED APP.pdf",
     },
+    { id: "null", link: "null" },
+
+    {
+      id: "APAC FORM FOR LA CARE EFT.pdf",
+      link: "../../files/other/APAC FORM FOR LA CARE EFT.pdf",
+    },
+    {
+      id: "BC EFT FORM",
+      link: "../../files/other/BC EFT FORM.pdf",
+    },
+    { id: "BS EFT FORM", link: "../../files/other/BS EFT FORM.pdf" },
+    { id: "HN EFT FORM", link: "../../files/other/HN EFT FORM.pdf" },
+    {
+      id: "LA CARE SIGNED BROKER FORM REVISED",
+      link: "../../files/other/LA CARE SIGNED BROKER FORM REVISED.pdf",
+    },
   ];
 
   const downloadPdf = async (id: string, link: string) => {
