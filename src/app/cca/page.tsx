@@ -9,10 +9,10 @@ export default function Aff_death() {
   // form input data
   const [data, setFormData] = useState({
     fnum: "",
-    fname: "",
-    lname: "",
+    name: "",
     casenum: "",
     phone: "",
+    agent: "",
   });
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,10 +30,15 @@ export default function Aff_death() {
     const current_date = today.getDate();
     const current_month = today.getMonth() + 1;
 
+    const nameParts = formData.name.split(" ");
+    const lastName = nameParts.pop(); // Removes and returns the last element
+    const firstName = nameParts.join(" "); // Joins the remaining elements
+
     // Assuming searchProperty and legalDescription are implemented somewhere
     const baseData_a = {
+      agent: formData.agent,
       filenum: formData.fnum,
-      name: formData.fname + " " + formData.lname,
+      name: formData.name,
       date:
         current_month +
         "/" +
@@ -42,7 +47,7 @@ export default function Aff_death() {
         current_year.toString().slice(-2),
       case: formData.casenum,
       file_num: formData.fnum,
-      name1: formData.fname + " " + formData.lname,
+      name1: formData.name,
       case_id: formData.casenum,
       date1: today_str,
       phone: formData.phone,
@@ -50,17 +55,20 @@ export default function Aff_death() {
 
     const baseData_b = {
       "Case Number": `${formData.casenum}`,
-      "First Name": formData.fname,
-      "Last Name": formData.lname,
+      "First Name": firstName,
+      "Last Name": lastName,
     };
 
     const baseData_d = {
-      name: formData.fname + " " + formData.lname,
+      name: formData.name,
       date: today_str,
       what: formData.phone,
       "Case Number": `${formData.casenum}`,
-      "First Name": formData.fname,
-      "Last Name": formData.lname,
+      "First Name": firstName,
+      "Last Name": lastName,
+      MM: current_month.toString().padStart(2, "0"),
+      DD: current_date.toString().padStart(2, "0"),
+      YYYY: current_year.toString(),
     };
 
     try {
@@ -95,7 +103,7 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} Attestation-Form-Income ${current_month
+          } ${formData.name.toUpperCase()}  ${current_year} Attestation-Form-Income ${current_month
             .toString()
             .padStart(2, "0")}-${current_date
             .toString()
@@ -140,7 +148,7 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CASH INCOME LETTER ${current_month
+          } ${formData.name.toUpperCase()} ${current_year} CASH INCOME LETTER ${current_month
             .toString()
             .padStart(2, "0")}-${current_date
             .toString()
@@ -185,7 +193,7 @@ export default function Aff_death() {
           blob,
           `${
             formData.fnum
-          } ${formData.fname.toUpperCase()} ${formData.lname.toUpperCase()} ${current_year} CCA Change Form ${current_month
+          } ${formData.name.toUpperCase()}  ${current_year} CCA Change Form ${current_month
             .toString()
             .padStart(2, "0")}-${current_date
             .toString()
@@ -199,10 +207,10 @@ export default function Aff_death() {
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: "fnum", label: "FILE NUMBER" },
-    { id: "fname", label: "FIRST NAME" },
-    { id: "lname", label: "LAST NAME" },
-    { id: "casenum", label: "CASE NUMBER" },
+    { id: "fnum", label: "FILE#" },
+    { id: "name", label: "NAME" },
+    { id: "agent", label: "AGENT" },
+    { id: "casenum", label: "CASE#" },
     { id: "phone", label: "PHONE" },
   ];
 
@@ -229,9 +237,7 @@ export default function Aff_death() {
             />
           </div>
         ))}
-
         <br />
-
         <button
           className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
           type="button"
