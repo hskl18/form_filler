@@ -31,7 +31,6 @@ export default function Aff_death() {
     const nameParts = formData.name.split(" ");
     const lastName = nameParts.pop(); // Removes and returns the last element
     const firstName = nameParts.join(" "); // Joins the remaining elements
-    const caseNum = formData.casenum <= 10 ? formData.casenum : "";
 
     // Assuming searchProperty and legalDescription are implemented somewhere
     const baseData_a = {
@@ -44,16 +43,16 @@ export default function Aff_death() {
           today.getDate() +
           "/" +
           today.getFullYear().toString().slice(-2) || " ",
-      case: caseNum || " ",
+      case: formData.casenum || " ",
       file_num: formData.fnum || " ",
       name1: formData.name || " ",
-      case_id: caseNum || " ",
+      case_id: formData.casenum || " ",
       date1: today_str || " ",
       phone: formData.phone || " ",
     };
 
     const baseData_b = {
-      "Case Number": caseNum || " ",
+      "Case Number": formData.casenum || " ",
       "First Name": firstName || " ",
       "Last Name": lastName || " ",
       MM: current_month.toString().padStart(2, "0") || " ",
@@ -65,7 +64,7 @@ export default function Aff_death() {
       name: formData.name || " ",
       date: today_str || " ",
       what: formData.phone || " ",
-      "Case Number": caseNum || " ",
+      "Case Number": formData.casenum || " ",
       "First Name": firstName || " ",
       "Last Name": lastName || " ",
       MM: current_month.toString().padStart(2, "0") || " ",
