@@ -21,7 +21,7 @@ export default function Aff_death() {
 
   // handle pdf filling and download
   const fillPdfAndDownload = async (formData: any) => {
-    if (formData.caseNum.length !== 10) {
+    if (formData.caseNum.length > 10) {
       alert("case number must be 10 digits");
       return;
     }
