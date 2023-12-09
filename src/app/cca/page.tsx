@@ -2,15 +2,14 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from "react";
-import { PDFDocument } from "pdf-lib";
-import { saveAs } from "file-saver";
+import { getPDF } from "../../../helper/func";
 
 export default function Aff_death() {
   // form input data
   const [data, setFormData] = useState({
-    fnum: "",
+    fNum: "",
     name: "",
-    casenum: "",
+    caseNum: "",
     phone: "",
     agent: "",
   });
@@ -22,6 +21,14 @@ export default function Aff_death() {
 
   // handle pdf filling and download
   const fillPdfAndDownload = async (formData: any) => {
+    if (formData.caseNum.length !== 10) {
+      alert("case number must be 10 digits");
+      return;
+    }
+    if (formData.phone.replace(/\D/g, "").length !== 10) {
+      alert("phone number must be 10 digits");
+      return;
+    }
     const today = new Date();
     const today_str = `${
       today.getMonth() + 1
@@ -32,189 +39,69 @@ export default function Aff_death() {
     const lastName = nameParts.pop(); // Removes and returns the last element
     const firstName = nameParts.join(" "); // Joins the remaining elements
 
+    // Remove all non-numeric characters
+    const phone = formData.phone.replace(/\D/g, "");
+    // Format the string to (XXX) XXX-XXXX
+    const phoneNum = phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+
     // Assuming searchProperty and legalDescription are implemented somewhere
-    const baseData_a = {
-      agent: formData.agent || " ",
-      filenum: formData.fnum || " ",
-      name: formData.name || " ",
-      date:
-        current_month +
-          "/" +
-          today.getDate() +
-          "/" +
-          today.getFullYear().toString().slice(-2) || " ",
-      case: formData.casenum || " ",
-      file_num: formData.fnum || " ",
-      name1: formData.name || " ",
-      case_id: formData.casenum || " ",
-      date1: today_str || " ",
-      phone: formData.phone || " ",
+    const ccaFill = {
+      agent: formData.agent || "",
+      filenum: formData.fNum || "",
+      name: formData.name || "",
+      date: today_str || "",
+      case: formData.caseNum || "",
+      phone: phoneNum || "",
     };
 
-    const baseData_b = {
-      "Case Number": formData.casenum || " ",
-      "First Name": firstName || " ",
-      "Last Name": lastName || " ",
-      MM: current_month.toString().padStart(2, "0") || " ",
-      DD: today.getDate().toString().padStart(2, "0") || " ",
+    const attFill = {
+      "Case Number": formData.caseNum || "",
+      "First Name": firstName || "",
+      "Last Name": lastName || "",
+      MM: current_month.toString().padStart(2, "0") || "",
+      DD: today.getDate().toString().padStart(2, "0") || "",
       YYYY: today.getFullYear().toString() || " ",
     };
 
-    const baseData_d = {
-      name: formData.name || " ",
-      date: today_str || " ",
-      what: formData.phone || " ",
-      "Case Number": formData.casenum || " ",
-      "First Name": firstName || " ",
-      "Last Name": lastName || " ",
-      MM: current_month.toString().padStart(2, "0") || " ",
-      DD: today.getDate().toString().padStart(2, "0") || " ",
-      YYYY: today.getFullYear().toString() || " ",
+    const cashFill = {
+      name: formData.name || "",
+      date: today_str || "",
+      what: phoneNum || " ",
+      "Case Number": formData.caseNum || "",
+      "First Name": firstName || "",
+      "Last Name": lastName || "",
+      MM: current_month.toString().padStart(2, "0") || "",
+      DD: today.getDate().toString().padStart(2, "0") || "",
+      YYYY: today.getFullYear().toString() || "",
     };
 
-    try {
-      const pdfTemplateUrl = "../../files/cca/ATTESTATION FORM.pdf";
+    getPDF(
+      attFill,
+      formData,
+      "../../files/cca/ATTESTATION FORM.pdf",
+      "Attestation Form Income"
+    );
+    getPDF(
+      cashFill,
+      formData,
+      "../../files/cca/CASH INCOME LETTER.pdf",
+      "CASH INCOME LETTER"
+    );
 
-      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
-        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
-        return res.arrayBuffer();
-      });
-
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const form = pdfDoc.getForm();
-
-      for (const [key, value] of Object.entries(baseData_b)) {
-        const field = form.getTextField(key);
-
-        if (typeof value === "string") field.setText(value);
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      if (
-        formData.fnum === "" &&
-        formData.fname === "" &&
-        formData.lname === "" &&
-        formData.casenum === ""
-      ) {
-        saveAs(blob, `Attestation-Form-Income`);
-      } else {
-        saveAs(
-          blob,
-          `${
-            formData.fnum
-          } ${formData.name.toUpperCase()} ${today.getFullYear()} Attestation-Form-Income ${current_month
-            .toString()
-            .padStart(2, "0")}-${today
-            .getDate()
-            .toString()
-            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
-        );
-      }
-    } catch (error: any) {
-      console.error("Error filling PDF:", error);
-    }
-
-    try {
-      const pdfTemplateUrl = "../../files/cca/CASH INCOME LETTER.pdf";
-
-      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
-        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
-        return res.arrayBuffer();
-      });
-
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const form = pdfDoc.getForm();
-
-      for (const [key, value] of Object.entries(baseData_d)) {
-        const field = form.getTextField(key);
-
-        if (typeof value === "string") {
-          field.setText(value);
-        }
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      if (
-        formData.fnum === "" &&
-        formData.fname === "" &&
-        formData.lname === "" &&
-        formData.casenum === ""
-      ) {
-        saveAs(blob, `CASH INCOME LETTER.pdf`);
-      } else {
-        saveAs(
-          blob,
-          `${
-            formData.fnum
-          } ${formData.name.toUpperCase()} ${today.getFullYear()} CASH INCOME LETTER ${current_month
-            .toString()
-            .padStart(2, "0")}-${today
-            .getDate()
-            .toString()
-            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
-        );
-      }
-    } catch (error: any) {
-      console.error("Error filling PDF:", error);
-    }
-
-    try {
-      const pdfTemplateUrl = "../../files/cca/CCA Change Form.pdf";
-
-      const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
-        if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
-        return res.arrayBuffer();
-      });
-
-      const pdfDoc = await PDFDocument.load(arrayBuffer);
-      const form = pdfDoc.getForm();
-
-      for (const [key, value] of Object.entries(baseData_a)) {
-        const field = form.getTextField(key);
-
-        if (typeof value === "string") {
-          field.setText(value);
-        }
-      }
-
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-
-      if (
-        formData.fnum === "" &&
-        formData.fname === "" &&
-        formData.lname === "" &&
-        formData.casenum === ""
-      ) {
-        saveAs(blob, `2024 CCA Change Form.pdf`);
-      } else {
-        saveAs(
-          blob,
-          `${
-            formData.fnum
-          } ${formData.name.toUpperCase()} ${today.getFullYear()} CCA Change Form ${current_month
-            .toString()
-            .padStart(2, "0")}-${today
-            .getDate()
-            .toString()
-            .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`
-        );
-      }
-    } catch (error: any) {
-      console.error("Error filling PDF:", error);
-    }
+    getPDF(
+      ccaFill,
+      formData,
+      "../../files/cca/CCA Change Form.pdf",
+      "CCA Change Form"
+    );
   };
 
   // Define form fields for rendering
   const fieldsData = [
-    { id: "fnum", label: "FILE#" },
+    { id: "fNum", label: "FILE#" },
     { id: "name", label: "NAME" },
     { id: "agent", label: "AGENT" },
-    { id: "casenum", label: "CASE#" },
+    { id: "caseNum", label: "CASE#" },
     { id: "phone", label: "PHONE" },
   ];
 

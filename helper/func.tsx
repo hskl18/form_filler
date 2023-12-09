@@ -1,4 +1,10 @@
 // Define the type for the expected fetch data
+
+/* eslint-disable camelcase */
+
+import { PDFDocument } from "pdf-lib";
+import { saveAs } from "file-saver";
+
 export type fetchDataType = {
   street: string;
   city: string;
@@ -41,15 +47,50 @@ export async function searchProperty(address: any): Promise<fetchDataType> {
   }
 }
 
-// // Define a function to create a form field
-// function createButton(text: any, onClick: any) {
-//   return (
-//     <button
-//       className="rounded bg-blue-500 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-//       type="button"
-//       onClick={onClick}
-//     >
-//       {text}
-//     </button>
-//   );
-// }
+export function fileName(fileNum: string, name: string, formName: string) {
+  const today = new Date();
+  const current_month = today.getMonth() + 1;
+
+  if (fileNum === "" && name === "") {
+    return `${formName}.pdf`;
+  } else {
+    return `${fileNum} ${name.toUpperCase()} ${formName} ${current_month
+      .toString()
+      .padStart(2, "0")}-${today
+      .getDate()
+      .toString()
+      .padStart(2, "0")}-${today.getFullYear()}${today.getFullYear()}.pdf`;
+  }
+}
+
+export async function getPDF(
+  baseData: any,
+  formData: any,
+  filePath: string,
+  file: string
+) {
+  try {
+    const pdfTemplateUrl = filePath;
+
+    const arrayBuffer = await fetch(pdfTemplateUrl).then((res) => {
+      if (!res.ok) throw new Error(`Error fetching PDF: ${res.statusText}`);
+      return res.arrayBuffer();
+    });
+
+    const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const form = pdfDoc.getForm();
+
+    for (const [key, value] of Object.entries(baseData)) {
+      const field = form.getTextField(key);
+
+      if (typeof value === "string") field.setText(value);
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+    saveAs(blob, `${fileName(formData.fNum, formData.name, file)}`);
+  } catch (error: any) {
+    console.error("Error filling PDF:", error);
+  }
+}
