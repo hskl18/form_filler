@@ -25,7 +25,7 @@ export default function Aff_death() {
       alert("case number must be 10 digits");
       return;
     }
-    if (formData.phone.replace(/\D/g, "").length !== 10) {
+    if (formData.phone.replace(/\D/g, "").length > 10) {
       alert("phone number must be 10 digits");
       return;
     }
