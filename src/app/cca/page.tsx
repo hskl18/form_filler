@@ -45,14 +45,27 @@ export default function Aff_death() {
     // Format the string to (XXX) XXX-XXXX
     const phoneNum = phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
 
-    // const income =
-    //   (formData.income.replace(/\D/g, "") + "00")
-    //     .slice(0, -2)
-    //     .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-    //   "." +
-    //   (formData.income.replace(/\D/g, "") + "00").slice(-2);
+    let thousands = "";
+    let hundreds = "";
+    let cents = "";
 
-    // Assuming searchProperty and legalDescription are implemented somewhere
+    const incomeNumber = Number(formData.income);
+    if (!isNaN(incomeNumber) && incomeNumber > 0 && incomeNumber < 1000000) {
+      // Extract thousands and hundreds
+      thousands = Math.floor(incomeNumber / 1000)
+        .toString()
+        .padStart(3, "0");
+      hundreds = Math.floor((incomeNumber % 1000) / 100)
+        .toString()
+        .padStart(3, "0");
+      const remainder = incomeNumber % 100;
+
+      // Extract cents and format to two digits
+      cents = Math.round((remainder - Math.floor(remainder)) * 100)
+        .toString()
+        .padStart(2, "0");
+    }
+
     const ccaFill = {
       agent: formData.agent || "",
       filenum: formData.fNum || "",
@@ -70,6 +83,10 @@ export default function Aff_death() {
       MM: current_month.toString().padStart(2, "0") || "",
       DD: today.getDate().toString().padStart(2, "0") || "",
       YYYY: today.getFullYear().toString() || " ",
+
+      Thousands: thousands || "",
+      Hundreds: hundreds || "",
+      Cents: cents || "",
     };
 
     const cashFill = {
@@ -83,6 +100,10 @@ export default function Aff_death() {
       MM: current_month.toString().padStart(2, "0") || "",
       DD: today.getDate().toString().padStart(2, "0") || "",
       YYYY: today.getFullYear().toString() || "",
+
+      Thousands: thousands || "",
+      Hundreds: hundreds || "",
+      Cents: cents || "",
     };
 
     getPDF(
