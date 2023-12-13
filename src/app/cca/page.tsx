@@ -45,12 +45,12 @@ export default function Aff_death() {
     // Format the string to (XXX) XXX-XXXX
     const phoneNum = phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
 
-    const income =
-      (formData.income.replace(/\D/g, "") + "00")
-        .slice(0, -2)
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
-      "." +
-      (formData.income.replace(/\D/g, "") + "00").slice(-2);
+    // const income =
+    //   (formData.income.replace(/\D/g, "") + "00")
+    //     .slice(0, -2)
+    //     .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+    //   "." +
+    //   (formData.income.replace(/\D/g, "") + "00").slice(-2);
 
     // Assuming searchProperty and legalDescription are implemented somewhere
     const ccaFill = {
@@ -60,7 +60,7 @@ export default function Aff_death() {
       date: today_str || "",
       case: formData.caseNum || "",
       phone: phoneNum || "",
-      annuealincome: income || "",
+      annuealincome: formData.income || "",
     };
 
     const attFill = {
@@ -73,7 +73,7 @@ export default function Aff_death() {
     };
 
     const cashFill = {
-      cash: income || "",
+      // cash: income || "",
       name: formData.name || "",
       date: today_str || "",
       what: phoneNum || " ",
