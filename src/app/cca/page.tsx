@@ -12,6 +12,7 @@ export default function Aff_death() {
     caseNum: "",
     phone: "",
     agent: "",
+    income: "",
   });
   // Handle form field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +45,13 @@ export default function Aff_death() {
     // Format the string to (XXX) XXX-XXXX
     const phoneNum = phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
 
+    const income =
+      (formData.income.replace(/\D/g, "") + "00")
+        .slice(0, -2)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+      "." +
+      (formData.income.replace(/\D/g, "") + "00").slice(-2);
+
     // Assuming searchProperty and legalDescription are implemented somewhere
     const ccaFill = {
       agent: formData.agent || "",
@@ -52,6 +60,7 @@ export default function Aff_death() {
       date: today_str || "",
       case: formData.caseNum || "",
       phone: phoneNum || "",
+      annuealincome: income || "",
     };
 
     const attFill = {
@@ -64,6 +73,7 @@ export default function Aff_death() {
     };
 
     const cashFill = {
+      cash: income || "",
       name: formData.name || "",
       date: today_str || "",
       what: phoneNum || " ",
@@ -103,6 +113,7 @@ export default function Aff_death() {
     { id: "agent", label: "AGENT" },
     { id: "caseNum", label: "CASE#" },
     { id: "phone", label: "PHONE" },
+    { id: "income", label: "ANNUAL INCOME" },
   ];
 
   return (
