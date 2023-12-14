@@ -49,22 +49,40 @@ export default function Aff_death() {
     let hundreds = "";
     let cents = "";
 
-    const incomeNumber = Number(formData.income);
-    if (!isNaN(incomeNumber) && incomeNumber > 0 && incomeNumber < 1000000) {
-      // Extract thousands and hundreds
-      thousands = Math.floor(incomeNumber / 1000)
-        .toString()
-        .padStart(3, "0");
-      hundreds = Math.floor((incomeNumber % 1000) / 100)
-        .toString()
-        .padStart(3, "0");
-      const remainder = incomeNumber % 100;
+    // Check if the income string contains a decimal point
+    if (formData.income.includes(".")) {
+      // Split the income string at the decimal point
+      const parts = formData.income.split(".");
 
-      // Extract cents and format to two digits
-      cents = Math.round((remainder - Math.floor(remainder)) * 100)
-        .toString()
-        .padStart(2, "0");
+      // The part before the decimal point (thousands and hundreds)
+      const wholePart = parts[0];
+
+      // Extract thousands and hundreds if the length is sufficient
+      if (wholePart.length > 3) {
+        thousands = wholePart.slice(0, -3).padStart(3, "0");
+        hundreds = wholePart.slice(-3);
+      } else {
+        hundreds = wholePart.padStart(3, "0");
+      }
+
+      // The part after the decimal point (cents)
+      cents = parts[1].padEnd(2, "0");
+    } else {
+      // Check if the income string length is more than 3
+      if (formData.income.length > 3) {
+        // Extract the last three characters as hundreds
+        hundreds = formData.income.slice(-3);
+
+        // Extract the remaining part as thousands
+        thousands = formData.income.slice(0, -3).padStart(3, "0");
+      } else {
+        // If the string is 3 characters or less, it's all in hundreds
+        hundreds = formData.income.padStart(3, "0");
+      }
+      cents = "00";
     }
+
+    // Additional code to handle the results goes here
 
     const ccaFill = {
       agent: formData.agent || "",
