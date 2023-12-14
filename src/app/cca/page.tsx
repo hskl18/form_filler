@@ -138,7 +138,7 @@ export default function Aff_death() {
   ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-white p-8 shadow-md">
         <h1 className="mb-6 text-2xl font-semibold text-gray-800">
           CCA 全家桶
@@ -167,6 +167,19 @@ export default function Aff_death() {
           onClick={() => fillPdfAndDownload(data)}
         >
           领取全家桶
+        </button>
+        <br />
+        <button
+          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          type="button"
+          onClick={() =>
+            window.open(
+              "https://apply.coveredca.com/lw-shopandcompare/?lang=en_EN",
+              "_blank"
+            )
+          }
+        >
+          CCA Shop and Compare
         </button>
       </form>
     </div>
