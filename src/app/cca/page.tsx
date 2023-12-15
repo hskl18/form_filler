@@ -77,9 +77,13 @@ export default function Aff_death() {
         thousands = formData.income.slice(0, -3).padStart(3, "0");
       } else {
         // If the string is 3 characters or less, it's all in hundreds
-        hundreds = formData.income.padStart(3, "0");
+        if (formData.income.length > 0) {
+          hundreds = formData.income.padStart(3, "0");
+        }
       }
-      cents = "00";
+      if (formData.income.length > 0) {
+        cents = "00";
+      }
     }
 
     // Additional code to handle the results goes here
