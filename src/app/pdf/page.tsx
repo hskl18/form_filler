@@ -3,13 +3,12 @@
 
 import React from "react";
 import Image from "next/image";
-import { saveAs } from "file-saver";
 import tree from "../../../public/2024 Drg.png";
 
 export default function Homestead() {
   const forms = [
     {
-      id: "HOMESTAED 1 OWNER FORM",
+      id: "HOMESTEAD 1 OWNER FORM",
       link: "../../files/home/HOMESTEAD1.pdf",
     },
     {
@@ -56,17 +55,11 @@ export default function Homestead() {
     },
   ];
 
-  const downloadPdf = async (id: string, link: string) => {
+  const openPdfInNewTab = (link: string) => {
     try {
-      const pdfTemplateUrl = link;
-
-      const response = await fetch(pdfTemplateUrl);
-      if (!response.ok)
-        throw new Error(`Error fetching PDF: ${response.statusText}`);
-      const blob = await response.blob();
-      saveAs(blob, id);
+      window.open(link, "");
     } catch (error) {
-      console.error("Error downloading PDF:", error);
+      console.error("Error opening PDF in new tab:", error);
     }
   };
 
@@ -86,7 +79,7 @@ export default function Homestead() {
           <div key={form.id} className="flex flex-col">
             {form.id !== "null" ? (
               <button
-                onClick={() => downloadPdf(form.id, form.link)}
+                onClick={() => openPdfInNewTab(form.link)}
                 className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
               >
                 {"->"}

@@ -6,7 +6,7 @@ import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Form Filler",
+  title: "CCA Filler",
   description: "Generate all cca filled form",
 };
 
