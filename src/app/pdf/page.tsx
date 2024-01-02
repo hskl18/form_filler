@@ -4,7 +4,7 @@
 import React from "react";
 import Image from "next/image";
 import { saveAs } from "file-saver";
-import tree from "../../../public/tree.png";
+import tree from "../../../public/2024 Drg.png";
 
 export default function Homestead() {
   const forms = [
@@ -71,17 +71,17 @@ export default function Homestead() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-2">
-      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-gray-300 p-8 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#f2f2f2] py-2">
+      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg p-8 ">
         <div className="flex w-full justify-center">
           <Image src={tree} width={200} height={200} alt="APAC Logo" />
         </div>
-        <div className="flex justify-center">
+        {/* <div className="flex justify-center">
           <h1 className="mb-6 text-2xl font-semibold text-gray-800">
             Download All Fillable Forms
           </h1>
-        </div>
-
+        </div> */}
+        <br />
         {forms.map((form) => (
           <div key={form.id} className="flex flex-col">
             {form.id !== "null" ? (

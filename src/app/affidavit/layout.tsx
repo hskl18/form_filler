@@ -6,7 +6,7 @@ import React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Form Filler",
+  title: "Affidavit Filler",
   description: "Generate a filled form",
 };
 

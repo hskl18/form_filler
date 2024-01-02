@@ -49,6 +49,8 @@ export default function Aff_death() {
     let hundreds = "";
     let cents = "";
 
+    formData.income = formData.income.replace(/,/g, "");
+    console.log(formData.income);
     // Check if the income string contains a decimal point
     if (formData.income.includes(".")) {
       // Split the income string at the decimal point
@@ -59,7 +61,7 @@ export default function Aff_death() {
 
       // Extract thousands and hundreds if the length is sufficient
       if (wholePart.length > 3) {
-        thousands = wholePart.slice(0, -3).padStart(3, "0");
+        thousands = wholePart.slice(0, -3).padStart(3, " ");
         hundreds = wholePart.slice(-3);
       } else {
         hundreds = wholePart.padStart(3, "0");
@@ -74,7 +76,7 @@ export default function Aff_death() {
         hundreds = formData.income.slice(-3);
 
         // Extract the remaining part as thousands
-        thousands = formData.income.slice(0, -3).padStart(3, "0");
+        thousands = formData.income.slice(0, -3).padStart(3, " ");
       } else {
         // If the string is 3 characters or less, it's all in hundreds
         if (formData.income.length > 0) {
@@ -160,9 +162,9 @@ export default function Aff_death() {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-white p-8 shadow-md">
-        <h1 className="mb-6 text-2xl font-semibold text-gray-800">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f2f2f2] py-2">
+      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-[#f2f2f2] p-8 ">
+        <h1 className="mb-6 items-center  text-2xl font-semibold text-gray-800">
           CCA 全家桶
         </h1>
 
@@ -184,15 +186,14 @@ export default function Aff_death() {
         ))}
         <br />
         <button
-          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="mb-2 rounded-lg bg-gray-200 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
           领取全家桶
         </button>
-        <br />
         <button
-          className="rounded bg-blue-400 px-4 py-2 font-bold text-white transition duration-300 ease-in-out hover:-translate-y-1 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+          className="mb-2 rounded-lg bg-gray-200 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300"
           type="button"
           onClick={() =>
             window.open(

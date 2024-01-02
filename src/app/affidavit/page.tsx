@@ -153,8 +153,8 @@ export default function Aff_death() {
   ];
 
   return (
-    <div className="flex min-h-screen items-center justify-center py-2">
-      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg bg-white p-8 shadow-md">
+    <div className="flex min-h-screen items-center justify-center bg-[#f2f2f2] py-2">
+      <form className="mb-4 flex w-full max-w-4xl flex-col rounded-lg p-8">
         <h1 className="mb-6 text-2xl font-semibold text-gray-800">
           Affidavit - Death of Trustee
         </h1>
@@ -179,7 +179,7 @@ export default function Aff_death() {
         <br />
 
         <button
-          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+          className="mb-2 rounded-lg bg-gray-200 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300"
           type="button"
           onClick={() => fillPdfAndDownload(data)}
         >
@@ -187,7 +187,7 @@ export default function Aff_death() {
         </button>
 
         <button
-          className="mb-2 rounded-lg bg-gray-300 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-400"
+          className="mb-2 rounded-lg bg-gray-200 px-6 py-3 text-lg font-medium text-gray-700 shadow-md transition duration-300 hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300"
           type="button"
           onClick={() =>
             window.open("https://portal.assessor.lacounty.gov/", "_blank")
