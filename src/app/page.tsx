@@ -20,6 +20,10 @@ export default function Home() {
       id: "VIEW RESPONSE（健康调查表）",
       link: "https://docs.google.com/spreadsheets/d/1CzbKtRk92zDR7U8bvlubqRBiYIjs7LWk8zgUVH1cUQw/edit?usp=sharing",
     },
+    {
+      id: "GO TO VERSION 2.0(新版本）",
+      link: "https://form-pi-orcin.vercel.app/",
+    },
   ];
   return (
     <div className="flex h-screen items-center justify-center bg-[#f2f2f2]">

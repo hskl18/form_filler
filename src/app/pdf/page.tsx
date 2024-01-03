@@ -29,6 +29,8 @@ export default function Homestead() {
       id: "AUTHORIZATION DELEGATE FORM.pdf",
       link: "../../files/cca/AUTHORIZATION DELEGATE FORM.pdf",
     },
+    { id: "null", link: "null" },
+
     { id: "Affidavit Of Death", link: "../../files/aff/AffidavitOfDeath.pdf" },
     { id: "null", link: "null" },
 
@@ -40,7 +42,7 @@ export default function Homestead() {
     { id: "null", link: "null" },
 
     {
-      id: "APAC FORM FOR LA CARE EFT.pdf",
+      id: "APAC FORM FOR LA CARE EFT",
       link: "../../files/other/APAC FORM FOR LA CARE EFT.pdf",
     },
     {
